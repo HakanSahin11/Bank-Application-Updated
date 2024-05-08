@@ -1,0 +1,46 @@
+﻿<Page x:Class="Bank_Desktop_UI.Pages.AccountsAndCardsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Bank_Desktop_UI.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AccountsAndCardsPage"
+      Background="White">
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Accounts and Cards" FontWeight="Bold"/>
+        <Label Content="Total amount" Grid.Row="1"/>
+        <Label Content="{Binding AccountValue, Mode=OneWay}" Grid.Row="1" Grid.Column="1" FontWeight="Bold"/>
+
+        <Label Content="Accounts" FontWeight="Bold" Grid.Row="3"/>
+        <Border Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1">
+            <StackPanel x:Name="StackPanelAccounts">
+                
+            </StackPanel>
+        </Border>
+        
+        
+        <Label Content="Creditcards" FontWeight="Bold" Grid.Row="3" Grid.Column="3"/>
+        <Border Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1" Grid.Column="3">
+            <StackPanel Name="StackPanelCreditcards"/>
+        </Border>
+    </Grid>
+</Page>

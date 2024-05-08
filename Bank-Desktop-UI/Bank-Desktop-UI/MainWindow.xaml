@@ -1,0 +1,29 @@
+﻿<Window x:Class="Bank_Desktop_UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bank_Desktop_UI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Background="#3700B3">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Background="#6200EE">
+            <Image x:Name="Logo" Stretch="Uniform" Margin="0,10,0,0" VerticalAlignment="Top" Height="25" Width="25" Source="/Images/Verified.png"/>
+            <ListBox SelectionMode="Single" SelectionChanged="Sidebar_SelectionChanged" x:Name="Sidebar" Margin="0,50,0,50" Background="Transparent" BorderThickness="0">
+                <local:NavButton Navlink="/Pages/AccountSummaryPage.xaml" Margin="3" Label="Account Summary" Padding="3" ImgUrl="/Images/Verified.png"/>
+                <local:NavButton Navlink="/Pages/AccountsAndCardsPage.xaml" Margin="3" Label="Accounts" Padding="3" ImgUrl="/Images/Verified.png"/>
+                <local:NavButton Navlink="/Pages/TransfersPage.xaml" Margin="3" Label="Transfer money" Padding="3" ImgUrl="/Images/Verified.png"/>
+                <local:NavButton Navlink="/Pages/TransactionsPage.xaml" Margin="3" Label="Transactions" Padding="3" ImgUrl="/Images/Verified.png"/>
+                <local:NavButton Navlink="/Pages/SettingsPage.xaml" Margin="3" Label="Settings" Padding="3" ImgUrl="/Images/Verified.png"/>
+            </ListBox>
+        </StackPanel>
+
+        <Frame Grid.Column="2" x:Name="navframe" NavigationUIVisibility="Hidden" Background="#e9ecef" Source="/Pages/AccountSummaryPage.xaml"/>
+    </Grid>
+</Window>

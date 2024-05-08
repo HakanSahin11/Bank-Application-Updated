@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <RootNamespace>Bank_Desktop_UI</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Signup_Background.png" />
+    <None Remove="Images\Verified.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Signup_Background.png" />
+    <Resource Include="Images\Verified.png" />
+  </ItemGroup>
+
+</Project>

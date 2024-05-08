@@ -1,0 +1,38 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Bank_Desktop_UI">
+
+
+    <Style TargetType="{x:Type local:NavButton}">
+
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:NavButton}">
+                    <Border x:Name="back" CornerRadius="8" Padding="{TemplateBinding Padding}" Background="Transparent" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <StackPanel x:Name="panel" Orientation="Horizontal" Background="#6200EE">
+                            <Image x:Name="imgUrl" Height="18" Width="18" Stretch="Uniform" Source="{TemplateBinding ImgUrl}"/>
+                            <Label x:Name="label" Content="{TemplateBinding Label}" Foreground="White"/>
+                        </StackPanel>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="back" Value="#3700B3"/>
+                            <Setter Property="Background" TargetName="panel" Value="#3700B3"/>
+                        </Trigger>
+
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" TargetName="back" Value="#3700B3"/>
+                            <Setter Property="Background" TargetName="panel" Value="#3700B3"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
