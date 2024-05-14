@@ -77,9 +77,12 @@ namespace Bank_Desktop_UI.Pages
             if (comboboxAccountItem.Value != 0)
                 transactionsToDisplay = Transactions.Where(s => s.FromAccountId == comboboxAccountItem.Value || s.ToAccountId == comboboxAccountItem.Value).ToList();
 
-            if(SearchContent != "")
+            if (SearchContent != "")
             {
-                transactionsToDisplay = transactionsToDisplay.Where(s => s.Name.Contains(SearchContent)).ToList();
+                var search = SearchContent.ToLower();
+                transactionsToDisplay = transactionsToDisplay.Where(s =>
+                       s.Name.ToLower().Contains(search)  
+                    || s.SenderName.ToLower().Contains(search)).ToList();
             }
 
             var accountListIds = Accounts.Select(s => s.Id);
@@ -101,7 +104,8 @@ namespace Bank_Desktop_UI.Pages
                         FromAccountId = item.FromAccountId,
                         ToAccountId = item.ToAccountId,
                         Id = item.Id,
-                        Name = item.SenderName,
+                        Name = item.Name,
+                        SenderName = item.SenderName,
                         Timestamp = item.Timestamp
                     };
                     transactionsSenderReciever.Add(newItem);
@@ -119,12 +123,14 @@ namespace Bank_Desktop_UI.Pages
             {
 
                 var lbName = CreateLabel(transaction.Name);
-                var lbTimestamp = CreateLabel(transaction.Timestamp.ToString("dd-MM-yy HH:mm", CultureInfo.InvariantCulture), 0, 1, VerticalAlignment.Top, HorizontalAlignment.Center);
-                var lbStatus = CreateLabel(transaction.Sender ? "Sent" : "Recieved", 0, 2, VerticalAlignment.Top, HorizontalAlignment.Center);
-                var lbAmount = CreateLabel(transaction.Amount.ToString(), 0, 3, VerticalAlignment.Top, HorizontalAlignment.Center);
+                var lbSenderName = CreateLabel(transaction.SenderName, 0, 1);
+                var lbTimestamp = CreateLabel(transaction.Timestamp.ToString("dd-MM-yy HH:mm", CultureInfo.InvariantCulture), 0,2, VerticalAlignment.Top, HorizontalAlignment.Center);
+                var lbStatus = CreateLabel(transaction.Sender ? "Sent" : "Recieved", 0, 3, VerticalAlignment.Top, HorizontalAlignment.Center);
+                var lbAmount = CreateLabel(transaction.Amount.ToString(), 0, 4, VerticalAlignment.Top, HorizontalAlignment.Center);
 
                 var grid = TransactionGridBase();
                 grid.Children.Add(lbName);
+                grid.Children.Add(lbSenderName);
                 grid.Children.Add(lbTimestamp);
                 grid.Children.Add(lbStatus);
                 grid.Children.Add(lbAmount);
@@ -143,7 +149,8 @@ namespace Bank_Desktop_UI.Pages
             {
                 ColumnDefinitions =
                 {
-                    new ColumnDefinition{Width = new GridLength(2, GridUnitType.Star)},
+                    new ColumnDefinition{Width = new GridLength(1, GridUnitType.Star)},
+                    new ColumnDefinition{Width = new GridLength(1, GridUnitType.Star)},
                     new ColumnDefinition{Width = new GridLength(1, GridUnitType.Star)},
                     new ColumnDefinition{Width = new GridLength(1, GridUnitType.Star)},
                     new ColumnDefinition{Width = new GridLength(1, GridUnitType.Star)},
@@ -160,6 +167,14 @@ namespace Bank_Desktop_UI.Pages
         private void ComboboxAccounts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Search();
+        }
+
+        private void TxtSearchbox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Search();
+            }
         }
     }
 

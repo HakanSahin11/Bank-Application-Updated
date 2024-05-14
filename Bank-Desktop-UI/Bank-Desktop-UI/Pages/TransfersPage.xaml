@@ -31,7 +31,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Content="Transfer funds" FontWeight="Bold"/>
 
@@ -49,18 +48,13 @@
         </Border>
         <TextBox Visibility="Hidden" Name="TextboxTo" Grid.Row="6" Grid.Column="1" PreviewTextInput="Textbox_NumbersOnly"/>
 
+        <Label Content="Note" Grid.Row="8"/>
+        <TextBox Grid.Row="8" Grid.Column="1"/>
 
+        <Label Content="Amount to transfer" Grid.Row="10" />
+        <TextBox Name="TextboxAmountToSend" Grid.Row="10" Grid.Column="1" PreviewTextInput="Textbox_NumbersOnly"/>
 
-        <Label Content="Name" Grid.Row="8"/>
-        <TextBox Name="TextboxName" Grid.Row="8" Grid.Column="1"/>
-
-        <Label Content="Note" Grid.Row="10"/>
-        <TextBox Grid.Row="10" Grid.Column="1"/>
-
-        <Label Content="Amount to transfer" Grid.Row="12" />
-        <TextBox Name="TextboxAmountToSend" Grid.Row="12" Grid.Column="1" PreviewTextInput="Textbox_NumbersOnly"/>
-
-        <Button Name="ButtonSend" Content="Send" Grid.Row="13" Grid.ColumnSpan="2" Click="ButtonSend_Click" Margin="2"/>
+        <Button Name="ButtonSend" Content="Send" Grid.Row="11" Grid.ColumnSpan="2" Click="ButtonSend_Click" Margin="2"/>
 
     </Grid>
 </Page>

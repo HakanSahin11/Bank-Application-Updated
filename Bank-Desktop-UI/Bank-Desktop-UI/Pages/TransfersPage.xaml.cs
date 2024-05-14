@@ -68,7 +68,6 @@ namespace Bank_Desktop_UI.Pages
 
         private TransactionRequest? FormTransactionRequest()
         {
-            var name = TextboxName.Text;
             var amount = double.Parse(TextboxAmountToSend.Text);
 
             var fromAccountNo = ((ComboboxItemObj)ComboboxFrom.SelectedValue).Value;
@@ -85,7 +84,6 @@ namespace Bank_Desktop_UI.Pages
                 Amount = amount,
                 FromAccountId = fromAccountNo,
                 ToAccountId = toAccountNo,
-                Name = name
             };
 
             return transaction;
@@ -112,13 +110,6 @@ namespace Bank_Desktop_UI.Pages
             {
                 TextboxTo.BorderBrush = Brushes.Red;
                 TextboxTo.BorderThickness = new Thickness(2);
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(TextboxName.Text))
-            {
-                TextboxName.BorderBrush = Brushes.Red;
-                TextboxName.BorderThickness = new Thickness(2);
                 return false;
             }
 
@@ -162,9 +153,6 @@ namespace Bank_Desktop_UI.Pages
             BorderComboboxTo.BorderThickness = new Thickness(0);
             BorderComboboxTo.BorderBrush = Brushes.Black;
 
-            TextboxName.BorderThickness = new Thickness(1);
-            TextboxName.BorderBrush = Brushes.Black;
-
             TextboxAmountToSend.BorderThickness = new Thickness(1);
             TextboxAmountToSend.BorderBrush = Brushes.Black;
 
@@ -178,17 +166,11 @@ namespace Bank_Desktop_UI.Pages
         {
             if (InternalTransfer)
             {
-                TextboxName.Text = $"{BaseInfo.Firstname} {BaseInfo.Lastname}";
-                TextboxName.IsEnabled = false;
-
                 ComboboxTo.Visibility = Visibility.Visible;
                 TextboxTo.Visibility = Visibility.Hidden;
             }
             else
             {
-                TextboxName.Text = "";
-                TextboxName.IsEnabled = true;
-
                 ComboboxTo.Visibility = Visibility.Hidden;
                 TextboxTo.Visibility = Visibility.Visible;
             }

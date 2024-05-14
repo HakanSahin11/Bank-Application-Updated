@@ -19,7 +19,7 @@ namespace Bank_Api.Services
             if (fromAccount == null || toAccount == null || fromAccount == toAccount)
                 throw new ArgumentException("Invalid account numbers");
 
-            if(fromAccount.Money < NewTransactionRequest.Amount)
+            if(fromAccount.Money < NewTransactionRequest.Amount || NewTransactionRequest.Amount <= 0)
                 throw new ArgumentException("Invalid amount of money to send");
 
             fromAccount.Money -= NewTransactionRequest.Amount;
@@ -30,7 +30,7 @@ namespace Bank_Api.Services
                 FromAccount = fromAccount,
                 ToAccount = toAccount,
                 Amount = NewTransactionRequest.Amount * -1,
-                Name = NewTransactionRequest.Name,
+                Name = $"{fromAccount.UserInfo.Firstname} {fromAccount.UserInfo.Lastname}",
                 Timestamp = DateTime.Now,
                 Sender = true
             };
