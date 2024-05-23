@@ -10,11 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Bank_Logo.png" />
     <None Remove="Images\Signup_Background.png" />
     <None Remove="Images\Verified.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Bank_Logo.png" />
     <Resource Include="Images\Signup_Background.png" />
     <Resource Include="Images\Verified.png" />
   </ItemGroup>

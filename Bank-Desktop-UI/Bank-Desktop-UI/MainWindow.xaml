@@ -7,13 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Background="#3700B3">
     <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="22*"/>
+            <RowDefinition Height="245*"/>
+            <RowDefinition Height="147*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="10"/>
-            <ColumnDefinition />
+            <ColumnDefinition Width="469*" />
+            <ColumnDefinition Width="162*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Background="#6200EE">
+        <StackPanel Background="#6200EE" Grid.ColumnSpan="2" Margin="0,0,10,0" Grid.RowSpan="3">
             <Image x:Name="Logo" Stretch="Uniform" Margin="0,10,0,0" VerticalAlignment="Top" Height="25" Width="25" Source="/Images/Verified.png"/>
             <ListBox SelectionMode="Single" SelectionChanged="Sidebar_SelectionChanged" x:Name="Sidebar" Margin="0,50,0,50" Background="Transparent" BorderThickness="0">
                 <local:NavButton Navlink="/Pages/AccountSummaryPage.xaml" Margin="3" Label="Account Summary" Padding="3" ImgUrl="/Images/Verified.png"/>
@@ -24,6 +30,6 @@
             </ListBox>
         </StackPanel>
 
-        <Frame Grid.Column="2" x:Name="navframe" NavigationUIVisibility="Hidden" Background="#e9ecef" Source="/Pages/AccountSummaryPage.xaml"/>
+        <Frame Grid.Column="2" x:Name="navframe" NavigationUIVisibility="Hidden" Background="#e9ecef" Source="/Pages/AccountSummaryPage.xaml" Grid.RowSpan="3" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>
