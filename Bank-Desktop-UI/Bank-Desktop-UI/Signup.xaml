@@ -29,7 +29,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" >
+        <StackPanel Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Image x:Name="Logo"  VerticalAlignment="Center" Height="50" Width="50" Source="/Images/Bank_Logo.png"/>
             <Label Content="Bank of Denmark" Foreground="White" HorizontalContentAlignment="Center" FontSize="22" FontWeight="Medium"/>
         </StackPanel>
@@ -50,7 +50,7 @@
         <PasswordBox Name="PasswordboxPwConfirm" Height="23" Grid.Column="3" Grid.Row="7" FontSize="16" BorderBrush="Black" KeyDown="EnterPressed_KeyDown"/>
 
         <Button Name="BtnSignup" Content="Sign up" Grid.Column="2" Grid.Row="8"  Click="BtnSignup_Click" Grid.ColumnSpan="2" FontWeight="Bold" Height="30"/>
-        <Label Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2">
+        <Label Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <Hyperlink Click="Hyperlink_Click" Foreground="White">Already have an account? Log in</Hyperlink>
         </Label>
 

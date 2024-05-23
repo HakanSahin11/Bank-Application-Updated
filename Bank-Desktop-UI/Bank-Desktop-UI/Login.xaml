@@ -26,7 +26,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" >
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Center" >
             <Image x:Name="Logo"  VerticalAlignment="Center" Height="50" Width="50" Source="/Images/Bank_Logo.png"/>
             <Label Content="Bank of Denmark" Foreground="White" HorizontalContentAlignment="Center" FontSize="22" FontWeight="Medium"/>
         </StackPanel>
@@ -38,7 +38,7 @@
         <PasswordBox Name="PwBoxPassword" Grid.Row="6" Grid.Column="1" FontSize="18" VerticalAlignment="Top" Height="25" BorderBrush="Black" KeyDown="EnterPressed_KeyDown"/>
 
         <Button Name="BtnLogin" Content="Login" Grid.Column="1" Grid.Row="7" Height="30" Click="BtnLogin_Click" FontWeight="Bold"/>
-        <Label Grid.Column="1" Grid.Row="8" >
+        <Label Grid.Column="1" Grid.Row="8"  HorizontalAlignment="Center">
             <Hyperlink Click="Hyperlink_Click" Foreground="White">Dont have an account? Sign up</Hyperlink>
         </Label>
     </Grid>
