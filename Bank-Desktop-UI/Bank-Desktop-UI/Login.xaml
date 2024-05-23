@@ -22,6 +22,7 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -30,14 +31,14 @@
             <Label Content="Bank of Denmark" Foreground="White" HorizontalContentAlignment="Center" FontSize="22" FontWeight="Medium"/>
         </StackPanel>
 
-        <Label Content="Email Address" Foreground="White" Grid.Row="2" FontSize="16" Grid.Column="1"/>
-        <TextBox Name="TextboxEmail" Text="{Binding EmailAddress, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Top" FontSize="18" KeyDown="EnterPressed_KeyDown"/>
+        <Label Content="Email Address" Foreground="White" Grid.Row="3" FontSize="16" Grid.Column="1"/>
+        <TextBox Name="TextboxEmail" Text="{Binding EmailAddress, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" VerticalAlignment="Top" FontSize="18" KeyDown="EnterPressed_KeyDown"/>
 
-        <Label Content="Password" Foreground="White" FontSize="16" Grid.Row="4" Grid.Column="1"/>
-        <PasswordBox Name="PwBoxPassword" Grid.Row="5" Grid.Column="1" FontSize="18" VerticalAlignment="Top" Height="25" BorderBrush="Black" KeyDown="EnterPressed_KeyDown"/>
+        <Label Content="Password" Foreground="White" FontSize="16" Grid.Row="5" Grid.Column="1"/>
+        <PasswordBox Name="PwBoxPassword" Grid.Row="6" Grid.Column="1" FontSize="18" VerticalAlignment="Top" Height="25" BorderBrush="Black" KeyDown="EnterPressed_KeyDown"/>
 
-        <Button Name="BtnLogin" Content="Login" Grid.Column="1" Grid.Row="6" Height="30" Click="BtnLogin_Click" FontWeight="Bold"/>
-        <Label Grid.Column="1" Grid.Row="7" >
+        <Button Name="BtnLogin" Content="Login" Grid.Column="1" Grid.Row="7" Height="30" Click="BtnLogin_Click" FontWeight="Bold"/>
+        <Label Grid.Column="1" Grid.Row="8" >
             <Hyperlink Click="Hyperlink_Click" Foreground="White">Dont have an account? Sign up</Hyperlink>
         </Label>
     </Grid>
