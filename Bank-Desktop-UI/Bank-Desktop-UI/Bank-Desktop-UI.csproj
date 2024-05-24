@@ -10,7 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Bank_Logo - Copy - Copy.png" />
+    <None Remove="Images\Bank_Logo - Copy.png" />
     <None Remove="Images\Bank_Logo.png" />
+    <None Remove="Images\Bank_Logo_test.png" />
     <None Remove="Images\Signup_1.jpg" />
     <None Remove="Images\Signup_2.jpg" />
     <None Remove="Images\Signup_3.jpg" />
