@@ -5,15 +5,29 @@
              StartupUri="Login.xaml">
     <Application.Resources>
         <Style TargetType="{x:Type Button}">
-            <Style.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5"/>
-                </Style>
-            </Style.Resources>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Background" Value="#BB86FC"/>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#9B6BD8"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#9B6BD8"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
+
         <Style TargetType="{x:Type Label}">
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
