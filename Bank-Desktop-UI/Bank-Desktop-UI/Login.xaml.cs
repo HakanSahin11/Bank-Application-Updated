@@ -1,7 +1,9 @@
 ﻿using Bank_Desktop_UI.Http_Request;
 using Bank_Desktop_UI.Models;
+using Bank_Desktop_UI.Validation;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security;
 using System.Text;
@@ -28,6 +30,10 @@ namespace Bank_Desktop_UI
             InitializeComponent();
             DataContext = this;
             TextboxEmail.Focus();
+
+
+            var validationRule = new ValidationRuleNotEmpty();
+            validationRule.Validate(PwBoxPassword.Password, CultureInfo.CurrentCulture);
         }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
@@ -73,6 +79,12 @@ namespace Bank_Desktop_UI
             {
                 SendLogin();
             }
+        }
+
+        private void PwBoxPassword_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var validationRule = new ValidationRuleNotEmpty();
+            validationRule.Validate(PwBoxPassword.Password, CultureInfo.CurrentCulture);
         }
     }
 }

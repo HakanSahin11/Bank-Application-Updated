@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bank_Desktop_UI"
+        xmlns:rules="clr-namespace:Bank_Desktop_UI.Validation"
         mc:Ignorable="d"
         Background="#6200EE"
         Title="Login" Height="350" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
@@ -35,10 +36,21 @@
         </StackPanel>
 
         <Label Content="Email Address" Foreground="White" Grid.Row="3" FontSize="15" Grid.Column="1" Padding="0"/>
-        <TextBox Name="TextboxEmail" Text="{Binding EmailAddress, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" VerticalAlignment="Top" FontSize="18" KeyDown="EnterPressed_KeyDown"/>
+        <TextBox Name="TextboxEmail" Grid.Row="4" Grid.Column="1" VerticalAlignment="Top" FontSize="18" KeyDown="EnterPressed_KeyDown">
+            <TextBox.Text>
+                <Binding Path="EmailAddress" UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <rules:ValidationRuleNotEmpty />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
 
         <Label Content="Password" Foreground="White" FontSize="15" Grid.Row="5" Grid.Column="1" Padding="0"/>
-        <PasswordBox Name="PwBoxPassword" Grid.Row="6" Grid.Column="1" FontSize="18" VerticalAlignment="Top" Height="25" BorderBrush="Black" KeyDown="EnterPressed_KeyDown"/>
+        <PasswordBox Name="PwBoxPassword" PasswordChar="*" Grid.Row="6" Grid.Column="1" FontSize="18" VerticalAlignment="Top" Height="25" BorderBrush="Black" KeyDown="EnterPressed_KeyDown" LostFocus="PwBoxPassword_LostFocus">
+           
+        </PasswordBox>
+
 
         <Button Name="BtnLogin" Content="Login" Grid.Column="1" Grid.Row="7" Height="30" Click="BtnLogin_Click" FontWeight="Bold"/>
         <Label Grid.Column="1" Grid.Row="8"  HorizontalAlignment="Center">
