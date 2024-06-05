@@ -1,27 +1,12 @@
 ﻿using Bank_Desktop_UI.Http_Request;
 using Bank_Desktop_UI.Models;
-using Bank_Desktop_UI.Validation;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Bank_Desktop_UI
 {
-    /// <summary>
-    /// Interaction logic for Login.xaml
-    /// </summary>
     public partial class Login : Window
     {
         public string EmailAddress { get; set; } = "";
@@ -30,10 +15,6 @@ namespace Bank_Desktop_UI
             InitializeComponent();
             DataContext = this;
             TextboxEmail.Focus();
-
-
-            var validationRule = new ValidationRuleNotEmpty();
-            validationRule.Validate(PwBoxPassword.Password, CultureInfo.CurrentCulture);
         }
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
@@ -68,23 +49,45 @@ namespace Bank_Desktop_UI
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            Signup newWindow = new Signup();
+            Signup newWindow = new();
             newWindow.Show();
             Close();
         }
 
-        private void EnterPressed_KeyDown(object sender, KeyEventArgs e)
+        private void Event_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            if (!BtnLogin.IsEnabled && !string.IsNullOrWhiteSpace(TextboxEmail.Text) && !string.IsNullOrWhiteSpace(PwBoxPassword.Password))
+                BtnLogin.IsEnabled = true;
+
+            if (BtnLogin.IsEnabled && e.Key == Key.Enter)
             {
                 SendLogin();
             }
         }
 
-        private void PwBoxPassword_LostFocus(object sender, RoutedEventArgs e)
+        private void Event_LostFocus(object sender, RoutedEventArgs e)
         {
-            var validationRule = new ValidationRuleNotEmpty();
-            validationRule.Validate(PwBoxPassword.Password, CultureInfo.CurrentCulture);
+            if (sender is TextBox txtBox)
+            {
+                if (string.IsNullOrEmpty(txtBox.Text))
+                {
+                    txtBox.BorderBrush = new SolidColorBrush(Colors.Red);
+                    BtnLogin.IsEnabled = false;
+                }
+                else
+                    txtBox.BorderBrush = new SolidColorBrush(Colors.Black);
+            }
+            else if (sender is PasswordBox pwBox)
+            {
+                if (string.IsNullOrEmpty(pwBox.Password))
+                {
+                    pwBox.BorderBrush = new SolidColorBrush(Colors.Red);
+                    BtnLogin.IsEnabled = false;
+
+                }
+                else
+                    pwBox.BorderBrush = new SolidColorBrush(Colors.Black);
+            }
         }
     }
 }
