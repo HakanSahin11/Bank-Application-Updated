@@ -41,7 +41,6 @@ namespace Bank_Desktop_UI
 
         private async Task<UserLoginResponse?> VerifySignup()
         {
-            ClearErrors();
             if (!Validation())
                 return null;
 
@@ -52,70 +51,13 @@ namespace Bank_Desktop_UI
 
         private bool Validation()
         {
-            if (string.IsNullOrWhiteSpace(EmailAddress))
-            {
-                TextboxEmail.BorderBrush = Brushes.Red;
-                TextboxEmail.BorderThickness = new Thickness(2);
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(Firstname))
-            {
-                TextboxFirstname.BorderBrush = Brushes.Red;
-                TextboxFirstname.BorderThickness = new Thickness(2);
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(Lastname))
-            {
-                TextboxLastname.BorderBrush = Brushes.Red;
-                TextboxLastname.BorderThickness = new Thickness(2);
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(PasswordboxPw.Password))
-            {
-                PasswordboxPw.BorderBrush = Brushes.Red;
-                PasswordboxPw.BorderThickness = new Thickness(2);
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(PasswordboxPwConfirm.Password))
-            {
-                PasswordboxPwConfirm.BorderBrush = Brushes.Red;
-                PasswordboxPwConfirm.BorderThickness = new Thickness(2);
-                return false;
-            }
-
             if (PasswordboxPw.Password != PasswordboxPwConfirm.Password)
             {
                 PasswordboxPw.BorderBrush = Brushes.Red;
-                PasswordboxPw.BorderThickness = new Thickness(2);
-
                 PasswordboxPwConfirm.BorderBrush = Brushes.Red;
-                PasswordboxPwConfirm.BorderThickness = new Thickness(2);
                 return false;
             }
-
             return true;
-        }
-
-        private void ClearErrors()
-        {
-            TextboxEmail.BorderThickness = new Thickness(1);
-            TextboxEmail.BorderBrush = Brushes.Black;
-
-            TextboxFirstname.BorderThickness = new Thickness(1);
-            TextboxFirstname.BorderBrush = Brushes.Black;
-
-            TextboxLastname.BorderThickness = new Thickness(1);
-            TextboxLastname.BorderBrush = Brushes.Black;
-
-            PasswordboxPw.BorderThickness = new Thickness(1);
-            PasswordboxPw.BorderBrush = Brushes.Black;
-
-            PasswordboxPwConfirm.BorderThickness = new Thickness(1);
-            PasswordboxPwConfirm.BorderBrush = Brushes.Black;
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
@@ -125,11 +67,44 @@ namespace Bank_Desktop_UI
             Close();
         }
 
-        private void EnterPressed_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void Event_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if(e.Key == System.Windows.Input.Key.Enter)
+            if (!BtnSignup.IsEnabled && 
+                !string.IsNullOrWhiteSpace(EmailAddress) && 
+                !string.IsNullOrWhiteSpace(Firstname) &&
+                !string.IsNullOrWhiteSpace(Lastname) &&
+                !string.IsNullOrWhiteSpace(PasswordboxPw.Password) &&
+                !string.IsNullOrWhiteSpace(PasswordboxPwConfirm.Password))
+                    BtnSignup.IsEnabled = true;
+
+            if (e.Key == System.Windows.Input.Key.Enter)
             {
                 SignUp();
+            }
+        }
+
+        private void Event_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox txtBox)
+            {
+                if (string.IsNullOrEmpty(txtBox.Text))
+                {
+                    txtBox.BorderBrush = new SolidColorBrush(Colors.Red);
+                    BtnSignup.IsEnabled = false;
+                }
+                else
+                    txtBox.BorderBrush = new SolidColorBrush(Colors.Black);
+            }
+            else if (sender is PasswordBox pwBox)
+            {
+                if (string.IsNullOrEmpty(pwBox.Password))
+                {
+                    pwBox.BorderBrush = new SolidColorBrush(Colors.Red);
+                    BtnSignup.IsEnabled = false;
+
+                }
+                else
+                    pwBox.BorderBrush = new SolidColorBrush(Colors.Black);
             }
         }
     }

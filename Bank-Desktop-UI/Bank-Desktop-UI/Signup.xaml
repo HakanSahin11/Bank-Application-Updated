@@ -33,21 +33,21 @@
             <Label Content="Bank of Denmark" Grid.Column="1" HorizontalContentAlignment="Center" Foreground="White" FontSize="20" FontWeight="Medium"/>
         </StackPanel>
         <Label Content="Email Address" FontSize="15" Foreground="White" Grid.Column="2" Grid.Row="3" />
-        <TextBox Name="TextboxEmail" Grid.Column="3" Height="23" FontSize="16" Grid.Row="3" Text="{Binding EmailAddress, Mode=TwoWay}" KeyDown="EnterPressed_KeyDown"/>
+        <TextBox Name="TextboxEmail" Grid.Column="3" Height="23" FontSize="16" Grid.Row="3" Text="{Binding EmailAddress, Mode=TwoWay}" KeyUp="Event_KeyUp" LostFocus="Event_LostFocus"/>
 
         <Label Content="Firstname" Foreground="White" FontSize="15" Grid.Column="2" Grid.Row="4" />
-        <TextBox Name="TextboxFirstname" Height="23" Grid.Column="3" Grid.Row="4" FontSize="16" Text="{Binding Firstname, Mode=TwoWay}" KeyDown="EnterPressed_KeyDown"/>
+        <TextBox Name="TextboxFirstname" Height="23" Grid.Column="3" Grid.Row="4" FontSize="16" Text="{Binding Firstname, Mode=TwoWay}" KeyUp="Event_KeyUp" LostFocus="Event_LostFocus"/>
 
         <Label Content="Lastname" Foreground="White" FontSize="15" Grid.Column="2" Grid.Row="5" />
-        <TextBox Name="TextboxLastname" Height="23" Grid.Column="3" Grid.Row="5"  FontSize="16" Text="{Binding Lastname, Mode=TwoWay}" KeyDown="EnterPressed_KeyDown"/>
+        <TextBox Name="TextboxLastname" Height="23" Grid.Column="3" Grid.Row="5"  FontSize="16" Text="{Binding Lastname, Mode=TwoWay}" KeyUp="Event_KeyUp" LostFocus="Event_LostFocus"/>
 
         <Label Content="Password" Foreground="White" FontSize="15" Grid.Column="2" Grid.Row="6" />
-        <PasswordBox Name="PasswordboxPw" Height="23" Grid.Column="3" Grid.Row="6"  FontSize="16"  BorderBrush="Black" KeyDown="EnterPressed_KeyDown"/>
+        <PasswordBox Name="PasswordboxPw" Height="23" Grid.Column="3" Grid.Row="6"  FontSize="16"  BorderBrush="Black" KeyUp="Event_KeyUp" LostFocus="Event_LostFocus"/>
 
         <Label Content="Confirm Password" Foreground="White" FontSize="15" Grid.Column="2" Grid.Row="7" />
-        <PasswordBox Name="PasswordboxPwConfirm" Height="23" Grid.Column="3" Grid.Row="7" FontSize="16" BorderBrush="Black" KeyDown="EnterPressed_KeyDown"/>
+        <PasswordBox Name="PasswordboxPwConfirm" Height="23" Grid.Column="3" Grid.Row="7" FontSize="16" BorderBrush="Black" KeyUp="Event_KeyUp" LostFocus="Event_LostFocus"/>
 
-        <Button Name="BtnSignup" Content="Sign up" Grid.Column="2" Grid.Row="8"  Click="BtnSignup_Click" Grid.ColumnSpan="2" FontWeight="Bold" Height="30"/>
+        <Button Name="BtnSignup" IsEnabled="False" Content="Sign up" Grid.Column="2" Grid.Row="8"  Click="BtnSignup_Click" Grid.ColumnSpan="2" FontWeight="Bold" Height="30"/>
         <Label Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <Hyperlink Click="Hyperlink_Click" Foreground="White">Already have an account? Log in</Hyperlink>
         </Label>
