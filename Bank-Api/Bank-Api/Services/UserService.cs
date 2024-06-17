@@ -1,4 +1,5 @@
 ﻿using Bank_Api.Context;
+using Bank_Api.Helpers;
 using Bank_Api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,17 +8,25 @@ namespace Bank_Api.Services
     public class UserService : IUserService
     {
         private readonly BankDbContext _context;
-        public UserService(BankDbContext context)
+        private readonly IGenerateJWTTokenHelper _jwtHelper;
+        public UserService(BankDbContext context, IGenerateJWTTokenHelper jwtHelper)
         {
             _context = context;
+            _jwtHelper = jwtHelper;
         }
 
-        public async Task<UserAuthentication> VerifyLogin(LoginRequest userAuthentication)
+        public async Task<LoginResonse> VerifyLogin(LoginRequest userAuthentication)
         {
             var user = await _context.UserAuthentication.Include(i => i.UserInfo).FirstOrDefaultAsync(s => s.Email == userAuthentication.Email && s.Password == userAuthentication.Password);
 
             if (user != null)
-                return user;
+            {
+                var token = _jwtHelper.GenerateJWTToken(user.UserInfo);
+                if(string.IsNullOrEmpty(token))
+                    throw new InvalidOperationException("Error creating token");
+
+                return new LoginResonse(user.UserInfo, token);
+            }
 
             throw new ArgumentException("Invalid login");
         }
@@ -98,7 +107,7 @@ namespace Bank_Api.Services
 
     public interface IUserService
     {
-        public Task<UserAuthentication> VerifyLogin(LoginRequest userAuthentication);
+        public Task<LoginResonse> VerifyLogin(LoginRequest userAuthentication);
         public Task<UserInfo> CreateUser(CreateUser NewUserRequest);
         public Task<IEnumerable<UserInfo>> GetAllUserInfos();
         public Task<UserInfo> GetUser(int Id);

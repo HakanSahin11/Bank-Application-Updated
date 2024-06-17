@@ -7,7 +7,7 @@ namespace Bank_Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CreditcardController : ControllerBase
+    public class CreditcardController : BaseController
     {
         private ICreditcardService _CreditcardService;
         public CreditcardController(ICreditcardService creditcardService)

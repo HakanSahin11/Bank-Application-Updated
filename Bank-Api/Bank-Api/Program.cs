@@ -1,8 +1,10 @@
 using Bank_Api.Context;
+using Bank_Api.Helpers;
 using Bank_Api.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,26 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ICreditcardService, CreditcardService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 
+builder.Services.AddTransient<IGenerateJWTTokenHelper, GenerateJWTTokenHelper>();
+
+builder.Services.AddAuthentication(auth =>
+{
+    auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    auth.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(bearer =>
+{
+    bearer.RequireHttpsMetadata = false;
+    bearer.SaveToken = false;
+    bearer.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ClockSkew = TimeSpan.Zero,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["ApplicationSettings:JWT_Secret"])),
+    };
+});
 
 var app = builder.Build();
 
@@ -42,6 +64,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

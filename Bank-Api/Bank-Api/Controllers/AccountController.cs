@@ -6,7 +6,7 @@ namespace Bank_Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseController 
     {
         private readonly IAccountService _AccountService;
         public AccountController(IAccountService accountService) 

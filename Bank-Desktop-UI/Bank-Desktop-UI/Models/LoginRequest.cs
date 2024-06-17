@@ -17,6 +17,7 @@
         public int Id { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+        public string Token { get; set; }
     }
 
     public static class BaseInfo
@@ -24,5 +25,6 @@
         public static int Id { get; set; }
         public static string Firstname { get; set; }
         public static string Lastname { get; set; }
+        public static string Token { get; set; }
     }
 }

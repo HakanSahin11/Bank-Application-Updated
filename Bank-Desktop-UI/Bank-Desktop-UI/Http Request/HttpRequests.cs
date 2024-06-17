@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Bank_Desktop_UI.Models;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Windows;
@@ -50,6 +51,8 @@ namespace Bank_Desktop_UI.Http_Request
             where ReturnObject : class
         {
             HttpResponseMessage response;
+            if(!string.IsNullOrEmpty(BaseInfo.Token) && !HttpClient.DefaultRequestHeaders.Contains("Authorization"))
+                HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + BaseInfo.Token);
 
             if (method == HttpMethod.Get)
             {

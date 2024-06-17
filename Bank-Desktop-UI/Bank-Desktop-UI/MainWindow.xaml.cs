@@ -23,6 +23,7 @@ namespace Bank_Desktop_UI
             BaseInfo.Id = _BasicUserInfo.Id;
             BaseInfo.Firstname = _BasicUserInfo.Firstname;
             BaseInfo.Lastname = _BasicUserInfo.Lastname;
+            BaseInfo.Token = _BasicUserInfo.Token;
         }
 
         private void Sidebar_SelectionChanged(object sender, SelectionChangedEventArgs e)

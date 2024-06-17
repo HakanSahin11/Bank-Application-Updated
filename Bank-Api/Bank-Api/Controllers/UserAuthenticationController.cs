@@ -27,13 +27,13 @@ namespace Bank_Api.Controllers
         {
             try
             {
-                var user = await _userService.VerifyLogin(userAuthentication);
-                if (user != null)
-                    return Ok(user.UserInfo);
+                var userWithToken = await _userService.VerifyLogin(userAuthentication);
+                if (userWithToken != null)
+                    return Ok(userWithToken);
             }
             catch (Exception ex)
             {
-                //Add loggin
+                //Add logging
             }
 
             return BadRequest("User not found");
