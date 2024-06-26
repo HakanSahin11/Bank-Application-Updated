@@ -35,7 +35,6 @@
         <Label Name="LbDatetime" Grid.Row="2" Content="{Binding DatetimeValue, Mode=OneWay}" Grid.Column="1"/>
         <Label Content="Account Total" Grid.Row="3"/>
         <Label Name="AccountTotalAmount" Content="{Binding AccountValue, Mode=TwoWay}" Grid.Row="3" Grid.Column="1"/>
-        <Button Name="BtnAccountAndCards" Content="Accounts and Cards"  Grid.Row="4" Click="BtnAccountAndCards_Click"/>
 
         <Label Content="Money flow" Grid.Row="6" VerticalContentAlignment="Bottom"/>
         <Border Grid.Row="7" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black">

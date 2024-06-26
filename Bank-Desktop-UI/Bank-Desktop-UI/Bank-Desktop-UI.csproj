@@ -10,23 +10,45 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Account-Overview-Icon.png" />
     <None Remove="Images\Bank_Logo - Copy - Copy.png" />
     <None Remove="Images\Bank_Logo - Copy.png" />
     <None Remove="Images\Bank_Logo.png" />
     <None Remove="Images\Bank_Logo_test.png" />
+    <None Remove="Images\Creditcard-Icon-1.png" />
+    <None Remove="Images\Creditcard-Icon-2.png" />
+    <None Remove="Images\Creditcard-Icon-3.png" />
+    <None Remove="Images\Creditcard-Icon-4.png" />
+    <None Remove="Images\Creditcard-Icon.png" />
+    <None Remove="Images\Overview-Icon-0.png" />
+    <None Remove="Images\Overview-Icon-1.png" />
+    <None Remove="Images\Settings-Icon-2.png" />
+    <None Remove="Images\Settings-Icon-3.png" />
+    <None Remove="Images\Settings-Icon-4.png" />
+    <None Remove="Images\Settings-Icon-5.png" />
+    <None Remove="Images\Settings-Icon-7.png" />
+    <None Remove="Images\Settings-Icon.png" />
     <None Remove="Images\Signup_1.jpg" />
     <None Remove="Images\Signup_2.jpg" />
     <None Remove="Images\Signup_3.jpg" />
     <None Remove="Images\Signup_4.jpg" />
     <None Remove="Images\Signup_Background.png" />
+    <None Remove="Images\Transactions-Icon.png" />
+    <None Remove="Images\Transfer-Icon-2.png" />
+    <None Remove="Images\Transfer-Icon.png" />
     <None Remove="Images\Verified.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Account-Overview-Icon.png" />
     <Resource Include="Images\Bank_Logo.png" />
+    <Resource Include="Images\Creditcard-Icon.png" />
+    <Resource Include="Images\Settings-Icon.png" />
     <Resource Include="Images\Signup_1.jpg" />
     <Resource Include="Images\Signup_4.jpg" />
     <Resource Include="Images\Signup_Background.png" />
+    <Resource Include="Images\Transactions-Icon.png" />
+    <Resource Include="Images\Transfer-Icon.png" />
     <Resource Include="Images\Verified.png" />
   </ItemGroup>
 

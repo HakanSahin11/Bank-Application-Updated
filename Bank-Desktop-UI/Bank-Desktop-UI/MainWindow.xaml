@@ -9,7 +9,8 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="22*"/>
-            <RowDefinition Height="245*"/>
+            <RowDefinition Height="59*"/>
+            <RowDefinition Height="186*"/>
             <RowDefinition Height="147*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -19,17 +20,17 @@
             <ColumnDefinition Width="162*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Background="#6200EE" Grid.ColumnSpan="2" Margin="0,0,10,0" Grid.RowSpan="3">
-            <Image x:Name="Logo" Stretch="Uniform" Margin="0,10,0,0" VerticalAlignment="Top" Height="25" Width="25" Source="/Images/Verified.png"/>
+        <StackPanel Background="#6200EE" Grid.ColumnSpan="2" Margin="0,0,10,0" Grid.RowSpan="4">
+            <Image x:Name="Logo" Stretch="Uniform" Margin="0,10,0,0" VerticalAlignment="Top" Height="25" Width="25" Source="/Images/Bank_Logo.png"/>
             <ListBox SelectionMode="Single" SelectionChanged="Sidebar_SelectionChanged" x:Name="Sidebar" Margin="0,50,0,50" Background="Transparent" BorderThickness="0">
-                <local:NavButton Navlink="/Pages/AccountSummaryPage.xaml" Margin="3" Label="Account Summary" Padding="3" ImgUrl="/Images/Verified.png"/>
-                <local:NavButton Navlink="/Pages/AccountsAndCardsPage.xaml" Margin="3" Label="Accounts" Padding="3" ImgUrl="/Images/Verified.png"/>
-                <local:NavButton Navlink="/Pages/TransfersPage.xaml" Margin="3" Label="Transfer money" Padding="3" ImgUrl="/Images/Verified.png"/>
-                <local:NavButton Navlink="/Pages/TransactionsPage.xaml" Margin="3" Label="Transactions" Padding="3" ImgUrl="/Images/Verified.png"/>
-                <local:NavButton Navlink="/Pages/SettingsPage.xaml" Margin="3" Label="Settings" Padding="3" ImgUrl="/Images/Verified.png"/>
+                <local:NavButton Navlink="/Pages/AccountSummaryPage.xaml" Margin="3" Label="Account Summary" Padding="3" ImgUrl="/Images/Account-Overview-Icon.png"/>
+                <local:NavButton Navlink="/Pages/AccountsAndCardsPage.xaml" Margin="3" Label="Accounts" Padding="3" ImgUrl="/Images/Creditcard-Icon.png"/>
+                <local:NavButton Navlink="/Pages/TransfersPage.xaml" Margin="3" Label="Transfer money" Padding="3" ImgUrl="/Images/Transfer-Icon.png"/>
+                <local:NavButton Navlink="/Pages/TransactionsPage.xaml" Margin="3" Label="Transactions" Padding="3" ImgUrl="/Images/Transactions-Icon.png"/>
+                <local:NavButton Navlink="/Pages/SettingsPage.xaml" Margin="3" Label="Settings" Padding="3" ImgUrl="/Images/Settings-Icon.png"/>
             </ListBox>
         </StackPanel>
 
-        <Frame Grid.Column="2" x:Name="navframe" NavigationUIVisibility="Hidden" Background="#e9ecef" Source="/Pages/AccountSummaryPage.xaml" Grid.RowSpan="3" Grid.ColumnSpan="2"/>
+        <Frame Grid.Column="2" x:Name="navframe" NavigationUIVisibility="Hidden" Background="#e9ecef" Source="/Pages/AccountSummaryPage.xaml" Grid.RowSpan="4" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

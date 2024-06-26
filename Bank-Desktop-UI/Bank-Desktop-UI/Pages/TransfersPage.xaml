@@ -54,7 +54,7 @@
         <Label Content="Amount to transfer" Grid.Row="10" />
         <TextBox Name="TextboxAmountToSend" Grid.Row="10" Grid.Column="1" PreviewTextInput="Textbox_NumbersOnly"/>
 
-        <Button Name="ButtonSend" Content="Send" Grid.Row="11" Grid.ColumnSpan="2" Click="ButtonSend_Click" Margin="2"/>
+        <Button Name="ButtonSend" Content="Send" Grid.Row="12" Grid.ColumnSpan="2" Click="ButtonSend_Click" Margin="2"/>
 
     </Grid>
 </Page>

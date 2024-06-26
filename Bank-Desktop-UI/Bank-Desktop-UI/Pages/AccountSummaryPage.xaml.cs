@@ -46,11 +46,5 @@ namespace Bank_Desktop_UI.Pages
 
             DataContext = this;
         }
-
-        private void BtnAccountAndCards_Click(object sender, RoutedEventArgs e)
-        {
-            AccountsAndCardsPage page = new AccountsAndCardsPage();
-            NavigationService.Navigate(page);
-        }
     }
 }
