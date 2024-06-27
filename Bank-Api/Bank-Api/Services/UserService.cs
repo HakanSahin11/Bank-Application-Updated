@@ -2,6 +2,8 @@
 using Bank_Api.Helpers;
 using Bank_Api.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("Bank-API-Tests")]
 
 namespace Bank_Api.Services
 {
@@ -22,7 +24,7 @@ namespace Bank_Api.Services
             if (user != null)
             {
                 var token = _jwtHelper.GenerateJWTToken(user.UserInfo);
-                if(string.IsNullOrEmpty(token))
+                if (string.IsNullOrEmpty(token))
                     throw new InvalidOperationException("Error creating token");
 
                 return new LoginResonse(user.UserInfo, token);
@@ -33,10 +35,29 @@ namespace Bank_Api.Services
 
         public async Task<UserInfo> CreateUser(CreateUser NewUserRequest)
         {
+            var user = FormNewUserRequest(NewUserRequest);
+            var res = await _context.UserAuthentication.AddAsync(await user);
+            await _context.SaveChangesAsync();
+            return res.Entity.UserInfo;
+        }
+
+        private async void ValidateUserRequest(CreateUser NewUserRequest)
+        {
+            ValidateUserRequest(NewUserRequest);
             var existingUser = await _context.UserAuthentication.FirstOrDefaultAsync(s => s.Email == NewUserRequest.Email);
             if (existingUser != null)
                 throw new ArgumentException("Email already exist");
 
+            if (string.IsNullOrEmpty(NewUserRequest.Firstname) ||
+                string.IsNullOrEmpty(NewUserRequest.Lastname) ||
+                string.IsNullOrEmpty(NewUserRequest.Email) ||
+                string.IsNullOrEmpty(NewUserRequest.Password))
+                throw new ArgumentException("Invalid user creation info");
+
+        }
+
+        private async Task<Creditcard> FormCreditcardForNewUser()
+        {
             var lastCreditcardNo = 1000000000000000;
             var lastCreditcard = await _context.Creditcard.OrderByDescending(x => x.Id).FirstOrDefaultAsync();
             if (lastCreditcard != null && lastCreditcard.CardNo >= lastCreditcardNo)
@@ -48,6 +69,12 @@ namespace Bank_Api.Services
                 CardNo = lastCreditcardNo,
             };
 
+            return creditcard;
+        }
+
+        private async Task<List<Account>> FormAccountsForNewUser(Creditcard Creditcard)
+        {
+            var accountList = new List<Account>();
             long accountNo = 1000000000;
             var lastAccount = await _context.Account.OrderByDescending(x => x.Id).FirstOrDefaultAsync();
             if (lastAccount != null && lastAccount.AccountNumber >= accountNo)
@@ -58,9 +85,9 @@ namespace Bank_Api.Services
                 AccountNumber = accountNo,
                 Money = 10000,
                 Name = "Default Account",
-                CreditCards = new List<Creditcard> 
-                { 
-                    creditcard 
+                CreditCards = new List<Creditcard>
+                {
+                    Creditcard
                 }
             };
 
@@ -71,27 +98,55 @@ namespace Bank_Api.Services
                 Name = "Secondary Account"
             };
 
+            accountList.Add(mainAccount);
+            accountList.Add(secondaryAccount);
+            return accountList;
+        }
+
+        private UserInfo FormUserInfoForNewUser(CreateUser NewUserRequest, List<Account> Accounts)
+        {
+            ValidateUserRequest(NewUserRequest);
+            if (Accounts.Count == 0)
+                throw new InvalidOperationException("Failed to create accounts");
+
             var newUserInfo = new UserInfo
             {
                 Firstname = NewUserRequest.Firstname,
                 Lastname = NewUserRequest.Lastname,
-                Accounts = new List<Account>
-                {
-                    mainAccount,
-                    secondaryAccount,
-                }
+                Accounts = Accounts
             };
+
+            return newUserInfo;
+        }
+
+        private UserAuthentication FormUserAuthenticationForNewUser(CreateUser NewUserRequest, UserInfo NewUserInfo)
+        {
+            ValidateUserRequest(NewUserRequest);
+            if (NewUserRequest.Firstname != NewUserInfo.Firstname ||
+                NewUserRequest.Lastname != NewUserInfo.Lastname ||
+                NewUserRequest.Email != NewUserInfo.UserAuthentication.Email ||
+                NewUserRequest.Password != NewUserInfo.UserAuthentication.Password)
+                    throw new InvalidOperationException("Failed to create User input Correctly");
+
 
             var newUserAuthentication = new UserAuthentication
             {
                 Email = NewUserRequest.Email,
                 Password = NewUserRequest.Password,
-                UserInfo = newUserInfo
+                UserInfo = NewUserInfo
             };
 
-            var res = await _context.UserAuthentication.AddAsync(newUserAuthentication);
-            await _context.SaveChangesAsync();
-            return res.Entity.UserInfo;
+            return newUserAuthentication;
+        }
+
+        internal async Task<UserAuthentication> FormNewUserRequest(CreateUser NewUserRequest)
+        {
+            ValidateUserRequest(NewUserRequest);
+            var creditcard = await FormCreditcardForNewUser();
+            var accounts = await FormAccountsForNewUser(creditcard);
+            var userInfo = FormUserInfoForNewUser(NewUserRequest, accounts);
+            var userAuthentication = FormUserAuthenticationForNewUser(NewUserRequest, userInfo);
+            return userAuthentication;
         }
 
         public async Task<IEnumerable<UserInfo>> GetAllUserInfos()
