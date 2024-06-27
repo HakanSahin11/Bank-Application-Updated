@@ -121,7 +121,7 @@ namespace Bank_API_Tests
         }
 
         [Fact]
-        public async void FormNewUserRequest_IsNot_Valid()
+        public async Task FormNewUserRequest_Where_EmailTaken()
         {
             var existingUser = UserInfoList.First();
             var existingAuth = UserAuthenticationList.First();
@@ -134,9 +134,8 @@ namespace Bank_API_Tests
                 Lastname = existingUser.Lastname
             };
 
-            var result = _serviceInTest.CreateUser(request);
-            Assert.True(false);
-
+            var act = async () => { await _serviceInTest.FormNewUserRequest(request); };
+            await act.Should().ThrowAsync<ArgumentException>().WithMessage("Email already exist");
         }
 
         [Fact]

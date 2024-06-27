@@ -2,8 +2,6 @@
 using Bank_Api.Helpers;
 using Bank_Api.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
-[assembly: InternalsVisibleTo("Bank-API-Tests")]
 
 namespace Bank_Api.Services
 {
@@ -43,7 +41,6 @@ namespace Bank_Api.Services
 
         private async void ValidateUserRequest(CreateUser NewUserRequest)
         {
-            ValidateUserRequest(NewUserRequest);
             var existingUser = await _context.UserAuthentication.FirstOrDefaultAsync(s => s.Email == NewUserRequest.Email);
             if (existingUser != null)
                 throw new ArgumentException("Email already exist");
