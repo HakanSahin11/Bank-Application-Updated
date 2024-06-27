@@ -97,11 +97,11 @@ namespace Bank_API_Tests
         }
 
         [Theory]
-        [InlineData("Test@User10.dk", "123456", "Test", "Test")]
-        [InlineData("Test@User11.dk", "123456", "Test", "Test")]
-        [InlineData("Test@User12.dk", "123456", "Test", "Test")]
-        [InlineData("Test@User13.dk", "123456", "Test", "Test")]
-        [InlineData("Test@User14.dk", "123456", "Test", "Test")]
+        [InlineData("Test@User10.dk", "12345", "Test", "Test")]
+        [InlineData("Test@User11.dk", "12345", "Test", "Test")]
+        [InlineData("Test@User12.dk", "12345", "Test", "Test")]
+        [InlineData("Test@User13.dk", "12345", "Test", "Test")]
+        [InlineData("Test@User14.dk", "12345", "Test", "Test")]
         public async void FormNewUserRequest_Is_Valid(string Email, string Password, string Firstname, string Lastname)
         {
             var request = new CreateUser
@@ -120,18 +120,20 @@ namespace Bank_API_Tests
             result.UserInfo.Lastname.Should().BeEquivalentTo(request.Lastname);
         }
 
-        [Fact]
-        public async Task FormNewUserRequest_Where_EmailTaken()
+        [Theory]
+        [InlineData("Test@User0.dk", "123456", "Test", "Test")]
+        [InlineData("Test@User1.dk", "123456", "Test", "Test")]
+        [InlineData("Test@User2.dk", "123456", "Test", "Test")]
+        [InlineData("Test@User3.dk", "123456", "Test", "Test")]
+        [InlineData("Test@User4.dk", "123456", "Test", "Test")]
+        public async Task FormNewUserRequest_Where_EmailTaken(string Email, string Password, string Firstname, string Lastname)
         {
-            var existingUser = UserInfoList.First();
-            var existingAuth = UserAuthenticationList.First();
-
             var request = new CreateUser
             {
-                Email = existingAuth.Email,
-                Password = existingAuth.Password,
-                Firstname = existingUser.Firstname,
-                Lastname = existingUser.Lastname
+                Email = Email,
+                Password = Password,
+                Firstname = Firstname,
+                Lastname = Lastname
             };
 
             var act = async () => { await _serviceInTest.FormNewUserRequest(request); };

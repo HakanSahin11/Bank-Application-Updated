@@ -39,7 +39,7 @@ namespace Bank_Api.Services
             return res.Entity.UserInfo;
         }
 
-        private async void ValidateUserRequest(CreateUser NewUserRequest)
+        private async Task ValidateUserRequest(CreateUser NewUserRequest)
         {
             var existingUser = await _context.UserAuthentication.FirstOrDefaultAsync(s => s.Email == NewUserRequest.Email);
             if (existingUser != null)
@@ -120,11 +120,12 @@ namespace Bank_Api.Services
         {
             ValidateUserRequest(NewUserRequest);
             if (NewUserRequest.Firstname != NewUserInfo.Firstname ||
-                NewUserRequest.Lastname != NewUserInfo.Lastname ||
-                NewUserRequest.Email != NewUserInfo.UserAuthentication.Email ||
-                NewUserRequest.Password != NewUserInfo.UserAuthentication.Password)
+                NewUserRequest.Lastname != NewUserInfo.Lastname) 
                     throw new InvalidOperationException("Failed to create User input Correctly");
 
+            if(string.IsNullOrWhiteSpace(NewUserRequest.Email) ||
+                string.IsNullOrWhiteSpace(NewUserRequest.Password))
+                throw new ArgumentException("Invalid username or password");
 
             var newUserAuthentication = new UserAuthentication
             {
@@ -138,7 +139,7 @@ namespace Bank_Api.Services
 
         internal async Task<UserAuthentication> FormNewUserRequest(CreateUser NewUserRequest)
         {
-            ValidateUserRequest(NewUserRequest);
+            await ValidateUserRequest(NewUserRequest);
             var creditcard = await FormCreditcardForNewUser();
             var accounts = await FormAccountsForNewUser(creditcard);
             var userInfo = FormUserInfoForNewUser(NewUserRequest, accounts);
