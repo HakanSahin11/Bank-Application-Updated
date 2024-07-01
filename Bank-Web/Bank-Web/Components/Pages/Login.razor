@@ -1,0 +1,47 @@
+﻿@page "/Login"
+<PageTitle>Login</PageTitle>
+
+<div class="login-container">
+    <div class="login-content">
+        <h2>Log in</h2>
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="Email" id="Email" class="form-control" @bind="Email" />
+        </div>
+        <div class="form-group">
+            <label for="Password">Password</label>
+            <input type="Password" id="Password" class="form-control" @bind="Password" />
+        </div>
+        <button class="btn btn-primary" @onclick="SendLogin">Login</button>
+
+        <hr />
+
+        <div class="form-group">
+            <button class="btn btn-link" @onclick="ForgotPassword">Forgot Password?</button>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-link" @onclick="CreateAccount">Create Account</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string Email = string.Empty;
+    private string Password = string.Empty;
+
+    private void SendLogin()
+    {
+        
+    }
+
+    private void ForgotPassword()
+    {
+
+    }
+
+    private void CreateAccount()
+    {
+        
+    }
+}
