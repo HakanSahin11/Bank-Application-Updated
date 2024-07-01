@@ -1,36 +1,35 @@
 .navbar {
-    background: rgb(55,0,179);
     background: linear-gradient(90deg, rgba(55,0,179,1) 0%, rgba(98,0,238,1) 100%);
 }
 
-.nav-item ::deep .nav-link {
+.nav-item ::deep .nav-link,
+.mainButton ::deep .mainButtonNav {
     color: white;
-    background: none;
-    border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     height: 3rem;
     display: flex;
     align-items: center;
+    justify-content: center; 
     line-height: 3rem;
     width: 100%;
 }
 
-.nav-item ::deep a.active,
-.mainButton ::deep a.active {
-    background-color: #b182e3;
-    color: white;
-}
+    .nav-item ::deep .nav-link:hover,
+    .mainButton ::deep .mainButtonNav:hover {
+        background-color: #018786;
+    }
 
-.nav-item ::deep .nav-link:hover,
-.mainButton ::deep .nav-link:hover {
-    background-color: #018786;
-    color: white;
-}
+    .nav-item ::deep .nav-link.active {
+        background-color: #b182e3;
+    }
 
-.mainButton {
+.mainButton ::deep .mainButtonNav {
     background-color: #BB86FC;
 }
 
-    .mainButton .oi {
-        color: white;
-    }
+.mainButton {
+    width: 100px;
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+}
