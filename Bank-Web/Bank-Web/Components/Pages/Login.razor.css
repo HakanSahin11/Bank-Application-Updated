@@ -55,6 +55,7 @@
     cursor: pointer;
 }
 
-    .btn-link:hover {
-        text-decoration: underline;
-    }
+    ::deep .btn-link:hover {
+    text-decoration: underline;
+    background-color: white;
+}

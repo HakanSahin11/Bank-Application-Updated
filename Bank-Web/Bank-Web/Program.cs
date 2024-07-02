@@ -1,10 +1,16 @@
 using Bank_Web.Components;
+using Bank_Web.Helpers;
+using Bank_Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddHttpClient<IHttpClientService, HttpClientService>();
+builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
+
 
 var app = builder.Build();
 

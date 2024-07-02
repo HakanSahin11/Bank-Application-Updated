@@ -1,4 +1,12 @@
 ﻿@page "/Login"
+@rendermode InteractiveServer
+
+@using Bank_Web.Helpers
+@using Bank_Web.Services
+
+@inject IHttpClientService HttpClientService
+@inject ILocalStorageService LocalStorageService
+
 <PageTitle>Login</PageTitle>
 
 <div class="login-container">
@@ -27,21 +35,34 @@
 </div>
 
 @code {
+
     private string Email = string.Empty;
     private string Password = string.Empty;
 
-    private void SendLogin()
+    private async Task SendLogin()
     {
-        
+        Console.WriteLine("Test");
+
+        var loginRequest = new SharedClasses.Models.LoginRequest(Email, Password);
+
+        var result = await HttpClientService.SendHttpPostRequest<SharedClasses.Models.UserLoginResponse>(IHttpClientService.Endpoints.UserAuthentication, "", loginRequest);
+
+        if (result != null && !string.IsNullOrEmpty(result.Token))
+        {
+
+            await LocalStorageService.SetItem<string>("AuthToken", result.Token);
+        }
     }
 
-    private void ForgotPassword()
+    private async Task ForgotPassword()
     {
+        Console.WriteLine("Test 2");
 
     }
 
-    private void CreateAccount()
+    private async Task CreateAccount()
     {
-        
+        Console.WriteLine("Test 3");
+
     }
 }
