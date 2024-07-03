@@ -31,12 +31,14 @@ namespace Bank_Api.Services
             throw new ArgumentException("Invalid login");
         }
 
-        public async Task<UserInfo> CreateUser(CreateUser NewUserRequest)
+        public async Task<LoginResonse> CreateUser(CreateUser NewUserRequest)
         {
             var user = FormNewUserRequest(NewUserRequest);
             var res = await _context.UserAuthentication.AddAsync(await user);
             await _context.SaveChangesAsync();
-            return res.Entity.UserInfo;
+
+            var baseUserWithToken = await VerifyLogin(new LoginRequest { Email = res.Entity.Email, Password = res.Entity.Password });
+            return baseUserWithToken;
         }
 
         private async Task ValidateUserRequest(CreateUser NewUserRequest)
@@ -161,7 +163,7 @@ namespace Bank_Api.Services
     public interface IUserService
     {
         public Task<LoginResonse> VerifyLogin(LoginRequest userAuthentication);
-        public Task<UserInfo> CreateUser(CreateUser NewUserRequest);
+        public Task<LoginResonse> CreateUser(CreateUser NewUserRequest);
         public Task<IEnumerable<UserInfo>> GetAllUserInfos();
         public Task<UserInfo> GetUser(int Id);
 

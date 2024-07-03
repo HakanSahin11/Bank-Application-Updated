@@ -1,5 +1,6 @@
 ﻿using Bank_Api.Models;
 using Bank_Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bank_Api.Controllers
@@ -7,7 +8,7 @@ namespace Bank_Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class UserController : BaseController
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
 
@@ -16,6 +17,7 @@ namespace Bank_Api.Controllers
             _userService = UserService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<UserInfo>>> GetAllUsers()
         {
@@ -24,7 +26,7 @@ namespace Bank_Api.Controllers
 
         }
 
-
+        [Authorize]
         [HttpGet("{Id}")]
         public async Task<ActionResult<UserInfo>> GetUserById(int Id)
         {

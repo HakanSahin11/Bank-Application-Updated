@@ -17,7 +17,7 @@
     {
         base.OnInitialized();
         var user = (await AuthState).User;
-        if (!user.Identity.IsAuthenticated)
+        if (!user.Identity.IsAuthenticated && !NavManager.Uri.ToLower().Contains("/signup"))
         {
             NavManager.NavigateTo("/Login");
 

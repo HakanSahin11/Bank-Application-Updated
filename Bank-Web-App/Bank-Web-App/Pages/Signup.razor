@@ -1,0 +1,73 @@
+﻿@page "/signup"
+@using System.ComponentModel.DataAnnotations
+@using Bank_Shared_Classes.Models
+@using Bank_Web_App.Authentication
+@using Bank_Web_App.Services
+@using Microsoft.AspNetCore.Components.Authorization
+
+@inject NavigationManager NavManager
+@inject IHttpClientService httpClientService
+@inject AuthenticationStateProvider AuthStateProvider
+
+<EditForm Model="SignupRequest" OnValidSubmit="HandleSignup">
+    <DataAnnotationsValidator />
+
+    <div class="login-container">
+        <div class="login-content">
+            <h2>Sign Up</h2>
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <InputText type="email" id="Email" class="form-control" @bind-Value="SignupRequest.Email" />
+                <ValidationMessage For="@(() => SignupRequest.Email)" />
+            </div>
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <InputText type="password" id="Password" class="form-control" @bind-Value="SignupRequest.Password" />
+                <ValidationMessage For="@(() => SignupRequest.Password)" />
+            </div>
+            <div class="form-group">
+                <label for="ConfirmPassword">Confirm Password</label>
+                <InputText type="password" id="ConfirmPassword" class="form-control" @bind-Value="SignupRequest.ConfirmPassword" />
+                <ValidationMessage For="@(() => SignupRequest.ConfirmPassword)" />
+            </div>
+            <div class="form-group">
+                <label for="Firstname">Firstname</label>
+                <InputText type="text" id="Firstname" class="form-control" @bind-Value="SignupRequest.Firstname" />
+                <ValidationMessage For="@(() => SignupRequest.Firstname)" />
+            </div>
+            <div class="form-group">
+                <label for="Lastname">Lastname</label>
+                <InputText type="text" id="Lastname" class="form-control" @bind-Value="SignupRequest.Lastname" />
+                <ValidationMessage For="@(() => SignupRequest.Lastname)" />
+            </div>
+            <button class="btn btn-primary" type="submit">Sign Up</button>
+
+            <hr />
+
+            <div class="form-group">
+                <button class="btn btn-link" @onclick="BackToLogin">Back to Login</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private SignupModel SignupRequest = new();
+
+    private async void HandleSignup()
+    {
+        var result = await httpClientService.SendHttpPostRequest<UserLoginResponse>(IHttpClientService.Endpoints.User, "", SignupRequest);
+        if (result != null && !string.IsNullOrEmpty(result.Token))
+        {
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
+            await customAuthStateProvider.UpdateAuthenticationState(result.Token);
+            NavManager.NavigateTo("/Counter", forceLoad: true);
+        }
+    }
+
+    private void BackToLogin()
+    {
+        NavManager.NavigateTo("/login");
+    }
+    
+}
