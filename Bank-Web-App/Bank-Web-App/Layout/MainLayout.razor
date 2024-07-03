@@ -1,7 +1,26 @@
-﻿@inherits LayoutComponentBase
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inherits LayoutComponentBase
+@inject NavigationManager NavManager
+
 <div class="bodyLayout">
     <NavMenu />
     <main class="container">
         @Body
     </main>
 </div>
+
+@code {
+
+    [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        var user = (await AuthState).User;
+        if (!user.Identity.IsAuthenticated)
+        {
+            NavManager.NavigateTo("/Login");
+
+        }
+    }
+}

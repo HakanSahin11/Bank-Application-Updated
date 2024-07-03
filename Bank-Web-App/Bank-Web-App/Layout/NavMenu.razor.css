@@ -1,5 +1,14 @@
 .navbar {
     background: linear-gradient(90deg, rgba(55,0,179,1) 0%, rgba(98,0,238,1) 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 1.5rem; /* Adjust font size as needed */
 }
 
 .nav-item ::deep .nav-link,
@@ -11,25 +20,24 @@
     align-items: center;
     justify-content: center;
     line-height: 3rem;
-    width: 100%;
+    padding: 0 15px;
 }
 
-    .nav-item ::deep .nav-link:hover,
-    .mainButton ::deep .mainButtonNav:hover {
-        background-color: #018786;
-    }
-
-    .nav-item ::deep .nav-link.active {
-        background-color: #b182e3;
-    }
+.nav-item ::deep .nav-link:hover,
+.mainButton ::deep .mainButtonNav:hover {
+    background-color: #018786;
+}
 
 .mainButton ::deep .mainButtonNav {
     background-color: #BB86FC;
 }
 
 .mainButton {
-    width: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.navbar-toggler {
+    border: none; /* Optional: Remove border for cleaner appearance */
 }

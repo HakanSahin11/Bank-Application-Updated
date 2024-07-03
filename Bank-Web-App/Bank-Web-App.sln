@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank-Web-App", "Bank-Web-App\Bank-Web-App.csproj", "{F075F4D1-DEEF-47F0-A9E8-15BCB5603D97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank-Web-App", "Bank-Web-App\Bank-Web-App.csproj", "{F075F4D1-DEEF-47F0-A9E8-15BCB5603D97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank-Shared-Classes", "Bank-Shared-Classes\Bank-Shared-Classes.csproj", "{E202231B-00A1-46BA-AE05-BCB8DD6033AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank-Shared-Classes", "Bank-Shared-Classes\Bank-Shared-Classes.csproj", "{E202231B-00A1-46BA-AE05-BCB8DD6033AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
