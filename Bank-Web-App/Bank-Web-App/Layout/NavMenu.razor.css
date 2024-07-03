@@ -8,7 +8,7 @@
 
 .navbar-brand {
     color: white;
-    font-size: 1.5rem; /* Adjust font size as needed */
+    font-size: 1.5rem; 
 }
 
 .nav-item ::deep .nav-link,
@@ -28,6 +28,10 @@
     background-color: #018786;
 }
 
+.mainButtonNav:hover {
+    cursor: pointer;
+}
+
 .mainButton ::deep .mainButtonNav {
     background-color: #BB86FC;
 }
@@ -39,5 +43,5 @@
 }
 
 .navbar-toggler {
-    border: none; /* Optional: Remove border for cleaner appearance */
+    border: none; 
 }
