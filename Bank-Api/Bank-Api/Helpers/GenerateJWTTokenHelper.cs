@@ -17,10 +17,13 @@ namespace Bank_Api.Helpers
 
         public string GenerateJWTToken(UserInfo user)
         {
-            var claims = new List<Claim> {
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Name, $"{user.Firstname} {user.Lastname}"),
-    };
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, $"{user.Firstname} {user.Lastname}"),
+                new Claim(ClaimTypes.Email, user.UserAuthentication.Email),
+                new Claim(ClaimTypes.Role, "User"),
+            };
             var jwtToken = new JwtSecurityToken(
                 claims: claims,
                 notBefore: DateTime.UtcNow,

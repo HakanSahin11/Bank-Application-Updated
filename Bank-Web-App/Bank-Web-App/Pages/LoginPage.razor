@@ -1,0 +1,69 @@
+﻿@page "/Login"
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavManager
+@inject IJSRuntime js
+@inject IHttpClientService httpClientService
+
+@using Bank_Shared_Classes.Models
+@using Bank_Web_App.Authentication
+@using Bank_Web_App.Models
+@using Bank_Web_App.Services
+@using Microsoft.AspNetCore.Components.Authorization
+
+<div class="login-container">
+    <div class="login-content">
+        <h2>Log in</h2>
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="Email" id="Email" class="form-control" @bind="Email" />
+        </div>
+        <div class="form-group">
+            <label for="Password">Password</label>
+            <input type="Password" id="Password" class="form-control" @bind="Password" />
+        </div>
+        <button class="btn btn-primary" @onclick="HandleLogin">Login</button>
+
+        <hr />
+
+        <div class="form-group">
+            <button class="btn btn-link" @onclick="ForgotPassword">Forgot Password?</button>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-link" @onclick="CreateAccount">Create Account</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    public LoginRequest User { get; set; } = new("","");
+    private string Email = string.Empty;
+    private string Password = string.Empty;
+
+
+    async Task HandleLogin()
+    {
+
+        var result = await httpClientService.SendHttpPostRequest<UserLoginResponse>(IHttpClientService.Endpoints.UserAuthentication, "", User);
+
+        if (result != null && !string.IsNullOrEmpty(result.Token))
+        {
+
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
+            await customAuthStateProvider.UpdateAuthenticationState(result.Token);
+            NavManager.NavigateTo("/Counter", forceLoad: true);
+        }
+    }
+
+    private async Task ForgotPassword()
+    {
+        Console.WriteLine("Test 2");
+
+    }
+
+    private async Task CreateAccount()
+    {
+        Console.WriteLine("Test 3");
+
+    }
+}
