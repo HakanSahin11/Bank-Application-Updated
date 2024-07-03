@@ -1,7 +1,7 @@
 ﻿@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavManager
 
 @using Bank_Web_App.Authentication
-@using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Components.Authorization
 <nav class="navbar navbar-expand-md navbar-dark mb-4">
     <div class="container-fluid justify-content-center">
@@ -17,29 +17,19 @@
                 <div class="collapse navbar-collapse @NavBarCssClass" id="navbarCollapse" @onclick="ToggleNavMenu">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
-                            <NavLink class="nav-link" href="counter" Match="NavLinkMatch.All">
-                                <span class="oi oi-home" aria-hidden="true"></span> Products
+                            <NavLink class="nav-link" href="AccountSummary" Match="NavLinkMatch.All">
+                                <span class="oi oi-home" aria-hidden="true"></span> Account Summary
                             </NavLink>
                         </li>
 
                         <li class="nav-item">
                             <NavLink class="nav-link" href="Weather">
-                                <span class="oi oi-plus" aria-hidden="true"></span> Inspiration
+                                <span class="oi oi-plus" aria-hidden="true"></span> Transfer Money
                             </NavLink>
                         </li>
                         <li class="nav-item">
                             <NavLink class="nav-link" href="counter">
-                                <span class="oi oi-list-rich" aria-hidden="true"></span> Something random
-                            </NavLink>
-                        </li>
-                        <li class="nav-item">
-                            <NavLink class="nav-link" href="Weather">
-                                <span class="oi oi-list-rich" aria-hidden="true"></span> Something random 2
-                            </NavLink>
-                        </li>
-                        <li class="nav-item">
-                            <NavLink class="nav-link" href="counter">
-                                <span class="oi oi-list-rich" aria-hidden="true"></span> Something random 3
+                                <span class="oi oi-list-rich" aria-hidden="true"></span> Transaction
                             </NavLink>
                         </li>
                     </ul>
@@ -86,5 +76,7 @@
     {
         var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
         await customAuthStateProvider.UpdateAuthenticationState(null);
+
+        NavManager.NavigateTo("/");
     }
 }

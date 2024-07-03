@@ -1,0 +1,125 @@
+﻿@page "/AccountSummary"
+
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Collections.Generic
+@using Bank_Shared_Classes.Models
+@using Bank_Web_App.Services
+@using System.Security.Claims
+
+@inject AuthenticationStateProvider AuthenticationStateProvider;
+@inject IHttpClientService httpClientService
+<PageTitle>Account and Cards</PageTitle>
+
+<h1>Account and Cards</h1>
+<h3 class="mt-5">Total amount</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4 mt-2">
+            <div class="card-header">
+                Accounts
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Account Number</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var account in Accounts)
+                            {
+                                <tr>
+                                    <td>@account.Name</td>
+                                    <td>@account.AccountNumber</td>
+                                    <td>@account.Money</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4 mt-2">
+            <div class="card-header">
+                Credit Cards
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Credit Card Number</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var creditCard in Creditcards)
+                            {
+                                <tr>
+                                    <td>@creditCard.Name</td>
+                                    <td>@creditCard.CardNo</td>
+                                    <td>Active</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+
+        var principal = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userId = principal.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(userId))
+            return; 
+
+        Creditcards = await httpClientService.SendHttpGetRequest<List<Creditcard>>(IHttpClientService.Endpoints.Creditcard, userId) ?? new();
+
+        Accounts = await httpClientService.SendHttpGetRequest<List<Account>>(IHttpClientService.Endpoints.Account, userId) ?? new();
+
+
+
+
+    }
+
+    private List<Account> Accounts = new List<Account>();
+    private List<Creditcard> Creditcards = new List<Creditcard>();
+
+    // public class CreditCard
+    // {
+    //     public string Name { get; set; }
+    //     public string CreditCardNumber { get; set; }
+    // }
+
+    // // Sample data for demonstration purposes
+    // private List<Account> Accounts = new List<Account>
+    // {
+    //     new Account { Name = "Checking", AccountNumber = "1234567890", Amount = 1500.00M },
+    //     new Account { Name = "Savings", AccountNumber = "0987654321", Amount = 3500.00M }
+    // };
+
+    // private List<CreditCard> CreditCards = new List<CreditCard>
+    // {
+    //     new CreditCard { Name = "Visa", CreditCardNumber = "4111111111111111" },
+    //     new CreditCard { Name = "MasterCard", CreditCardNumber = "5500000000000004" }
+    // };
+}

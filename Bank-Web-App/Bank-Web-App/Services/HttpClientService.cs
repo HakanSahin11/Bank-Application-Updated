@@ -2,18 +2,24 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Components.Authorization;
+using System.Security.Claims;
+using Blazored.LocalStorage;
+using Newtonsoft.Json.Linq;
 
 namespace Bank_Web_App.Services
 {
     public class HttpClientService : IHttpClientService
     {
-        private readonly HttpClient _httpClient;
-        public string? Token { get; set; }
 
-        public HttpClientService(HttpClient httpClient)
+        private readonly HttpClient _httpClient;
+        private readonly ILocalStorageService _localStorageService;
+
+        public HttpClientService(HttpClient httpClient, ILocalStorageService localStorageService)
         {
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri("http://localhost:5205");
+            _localStorageService = localStorageService;
         }
 
         public async Task<ReturnObject?> SendHttpGetRequest<ReturnObject>(Enum Controller, string Path) where ReturnObject : class
@@ -69,9 +75,11 @@ namespace Bank_Web_App.Services
         private async Task<ReturnObject?> SendHttpRequest<ReturnObject>(HttpMethod method, string innerPath, object? content = null)
             where ReturnObject : class
         {
-            if (!string.IsNullOrEmpty(Token))
+            var token = await _localStorageService.GetItemAsync<string>("token");
+
+            if (!string.IsNullOrEmpty(token))
             {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
             else
             {
@@ -100,7 +108,6 @@ namespace Bank_Web_App.Services
 
     public interface IHttpClientService
     {
-        string? Token { get; set; }
         Task<ReturnObject?> SendHttpGetRequest<ReturnObject>(Enum Controller, string Path) where ReturnObject : class;
         Task<ReturnObject?> SendHttpPostRequest<ReturnObject>(Enum Controller, string Path, object PostObject) where ReturnObject : class;
         Task<string> GetEndpoint(Enum endpoint);
