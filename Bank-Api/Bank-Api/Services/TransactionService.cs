@@ -35,7 +35,7 @@ namespace Bank_Api.Services
                 Sender = true
             };
 
-            var newTranaction = _context.Transaction.Add(transaction);
+            var newTranaction = await _context.Transaction.AddAsync(transaction);
             _context.SaveChanges();
             return new TransactionResponse(newTranaction.Entity);
         }
