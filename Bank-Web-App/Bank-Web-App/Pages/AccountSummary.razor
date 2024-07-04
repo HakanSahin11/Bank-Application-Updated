@@ -11,7 +11,7 @@
 <PageTitle>Account and Cards</PageTitle>
 
 <h1>Account and Cards</h1>
-<h3 class="mt-5">Total amount</h3>
+<h3 class="mt-5">Total amount: @TotalAmount </h3>
 
 <div class="row">
     <div class="col-md-6">
@@ -80,7 +80,7 @@
 
     private List<Account> Accounts = new List<Account>();
     private List<Creditcard> Creditcards = new List<Creditcard>();
-
+    private double TotalAmount = 0;
     protected override async Task OnInitializedAsync()
     {
         await LoadData();
@@ -96,7 +96,9 @@
             return; 
 
         Creditcards = await httpClientService.SendHttpGetRequest<List<Creditcard>>(IHttpClientService.Endpoints.Creditcard, userId) ?? new();
-
         Accounts = await httpClientService.SendHttpGetRequest<List<Account>>(IHttpClientService.Endpoints.Account, userId) ?? new();
+        
+        if(Accounts.Any())
+            TotalAmount = Accounts.Sum(s => s.Money);
     }
 }
