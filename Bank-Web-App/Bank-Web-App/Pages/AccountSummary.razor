@@ -78,6 +78,9 @@
 
 @code {
 
+    private List<Account> Accounts = new List<Account>();
+    private List<Creditcard> Creditcards = new List<Creditcard>();
+
     protected override async Task OnInitializedAsync()
     {
         await LoadData();
@@ -95,31 +98,5 @@
         Creditcards = await httpClientService.SendHttpGetRequest<List<Creditcard>>(IHttpClientService.Endpoints.Creditcard, userId) ?? new();
 
         Accounts = await httpClientService.SendHttpGetRequest<List<Account>>(IHttpClientService.Endpoints.Account, userId) ?? new();
-
-
-
-
     }
-
-    private List<Account> Accounts = new List<Account>();
-    private List<Creditcard> Creditcards = new List<Creditcard>();
-
-    // public class CreditCard
-    // {
-    //     public string Name { get; set; }
-    //     public string CreditCardNumber { get; set; }
-    // }
-
-    // // Sample data for demonstration purposes
-    // private List<Account> Accounts = new List<Account>
-    // {
-    //     new Account { Name = "Checking", AccountNumber = "1234567890", Amount = 1500.00M },
-    //     new Account { Name = "Savings", AccountNumber = "0987654321", Amount = 3500.00M }
-    // };
-
-    // private List<CreditCard> CreditCards = new List<CreditCard>
-    // {
-    //     new CreditCard { Name = "Visa", CreditCardNumber = "4111111111111111" },
-    //     new CreditCard { Name = "MasterCard", CreditCardNumber = "5500000000000004" }
-    // };
 }
