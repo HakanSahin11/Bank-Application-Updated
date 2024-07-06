@@ -1,0 +1,41 @@
+﻿@page "/Transfer"
+
+<h3>Transfer funds</h3>
+
+<div class="card">
+    <div class="card-body">
+        <div class="mb-4">
+            <h6 class="card-title">From</h6>
+            <Dropdown TItem="string">
+                <InitialTip>From</InitialTip>
+                <ChildContent>
+                    @foreach (var item in Items)
+                    {
+                        <DropdownListItem TItem="DropdownItem" Item="@item">@item.Text</DropdownListItem>
+                    }
+                </ChildContent>
+            </Dropdown>
+        </div>
+        <div class="mb-4">
+            <h6 class="card-title">To</h6>
+            <Dropdown TItem="string">
+                <InitialTip>To</InitialTip>
+                <ChildContent>
+                    @foreach (var item in Items)
+                    {
+                        <DropdownListItem TItem="DropdownItem" Item="@item">@item.Text</DropdownListItem>
+                    }
+                </ChildContent>
+            </Dropdown>
+        </div>
+    </div>
+</div>
+
+@code {
+    private static List<DropdownItem> Items = new List<DropdownItem>
+    {
+        new DropdownItem("Main account", 1) ,
+        new DropdownItem("Secondary account", 2) ,
+        new DropdownItem("Savings account", 3) ,
+    };
+}
