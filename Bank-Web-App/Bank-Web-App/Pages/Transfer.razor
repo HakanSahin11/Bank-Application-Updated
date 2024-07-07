@@ -7,7 +7,7 @@
             <div class="mb-4">
                 <h6 class="card-title">From</h6>
                 <Dropdown TItem="string" Class="w-100">
-                    <InitialTip>From</InitialTip>
+                    <InitialTip>Select account</InitialTip>
                     <ChildContent>
                         @foreach (var item in Items)
                         {
@@ -19,7 +19,7 @@
             <div class="mb-4">
                 <h6 class="card-title">To</h6>
                 <Dropdown TItem="string" Class="w-100">
-                    <InitialTip>To</InitialTip>
+                    <InitialTip>Select account</InitialTip>
                     <ChildContent>
                         @foreach (var item in Items)
                         {
@@ -28,6 +28,21 @@
                     </ChildContent>
                 </Dropdown>
             </div>
+
+            <div class="form-group mb-4">
+                <label for="AmountToTransfer">AmountToTransfer</label>
+                <input type="AmountToTransfer" id="AmountToTransfer" class="form-control border border-dark" @bind="AmountToTransfer" />
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="Note">Note</label>
+                <input type="Note" id="Note" class="form-control border border-dark" @bind="Note" />
+            </div>
+
+            <div class="form-group mb-4">
+                <button class="btn btn-primary w-100" @onclick="HandleTransfer">Transfer funds</button>
+            </div>
+            
         </div>
     </div>
 </div>
@@ -38,4 +53,12 @@
         new DropdownItem("Secondary account", 2) ,
         new DropdownItem("Savings account", 3) ,
     };
+
+    private double AmountToTransfer { get; set; }
+    private string Note { get; set; }
+
+    private async void HandleTransfer()
+    {
+        //add api call
+    }
 }

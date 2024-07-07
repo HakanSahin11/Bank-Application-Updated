@@ -4,7 +4,7 @@
 @typeparam TItem
 
 <div class="dropdown @(Class ?? string.Empty)">
-    <button class="btn btn-primary dropdown-toggle @(Class ?? string.Empty)" data-toggle="dropdown" type="button" @onclick="ToggleDropdown"
+    <button class="btn btn-light border border-dark dropdown-toggle @(Class ?? string.Empty)" data-toggle="dropdown" type="button" @onclick="ToggleDropdown"
             aria-haspopup="true" aria-expanded="@show.ToString().ToLower()">
         @Tip
     </button>
