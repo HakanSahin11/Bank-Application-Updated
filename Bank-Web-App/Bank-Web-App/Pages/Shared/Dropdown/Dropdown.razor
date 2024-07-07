@@ -2,13 +2,14 @@
 
 @using Microsoft.AspNetCore.Components.Web
 @typeparam TItem
-<div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle mr-4" data-toggle="dropdown" type="button" @onclick="e => this.show=!this.show "
-            aria-haspopup="true" aria-expanded="false">
+
+<div class="dropdown @(Class ?? string.Empty)">
+    <button class="btn btn-primary dropdown-toggle @(Class ?? string.Empty)" data-toggle="dropdown" type="button" @onclick="ToggleDropdown"
+            aria-haspopup="true" aria-expanded="@show.ToString().ToLower()">
         @Tip
     </button>
     <CascadingValue name="Dropdown" Value="@this">
-        <div class="dropdown-menu @(show? "show":"")">
+        <div class="dropdown-menu @(show ? "show" : "") @(Class ?? string.Empty)">
             @ChildContent
         </div>
     </CascadingValue>
@@ -17,20 +18,34 @@
 @code {
     [Parameter]
     public RenderFragment InitialTip { get; set; }
+
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+
     [Parameter]
     public EventCallback<TItem> OnSelected { get; set; }
+
+    [Parameter]
+    public string Class { get; set; }
 
     private bool show = false;
     private RenderFragment Tip;
 
-    protected override void OnInitialized() { this.Tip = InitialTip; }
+    private void ToggleDropdown()
+    {
+        show = !show;
+    }
+
+    protected override void OnInitialized()
+    {
+        Tip = InitialTip;
+    }
+
     public async Task HandleSelect(TItem item, RenderFragment<TItem> contentFragment)
     {
-        this.Tip = contentFragment.Invoke(item);
-        this.show = false;
+        Tip = contentFragment.Invoke(item);
+        show = false;
         StateHasChanged();
-        await this.OnSelected.InvokeAsync(item);
+        await OnSelected.InvokeAsync(item);
     }
 }

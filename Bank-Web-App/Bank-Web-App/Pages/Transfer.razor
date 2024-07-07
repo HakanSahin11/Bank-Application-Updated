@@ -1,36 +1,36 @@
 ﻿@page "/Transfer"
 
-<h3>Transfer funds</h3>
-
-<div class="card">
-    <div class="card-body">
-        <div class="mb-4">
-            <h6 class="card-title">From</h6>
-            <Dropdown TItem="string">
-                <InitialTip>From</InitialTip>
-                <ChildContent>
-                    @foreach (var item in Items)
-                    {
-                        <DropdownListItem TItem="DropdownItem" Item="@item">@item.Text</DropdownListItem>
-                    }
-                </ChildContent>
-            </Dropdown>
-        </div>
-        <div class="mb-4">
-            <h6 class="card-title">To</h6>
-            <Dropdown TItem="string">
-                <InitialTip>To</InitialTip>
-                <ChildContent>
-                    @foreach (var item in Items)
-                    {
-                        <DropdownListItem TItem="DropdownItem" Item="@item">@item.Text</DropdownListItem>
-                    }
-                </ChildContent>
-            </Dropdown>
+<div class="d-flex flex-column align-items-center w-100">
+    <h3 class="mb-4">Transfer funds</h3>
+    <div class="card" style="width: 50%;">
+        <div class="card-body">
+            <div class="mb-4">
+                <h6 class="card-title">From</h6>
+                <Dropdown TItem="string" Class="w-100">
+                    <InitialTip>From</InitialTip>
+                    <ChildContent>
+                        @foreach (var item in Items)
+                        {
+                            <DropdownListItem TItem="DropdownItem" Item="@item">@item.Text</DropdownListItem>
+                        }
+                    </ChildContent>
+                </Dropdown>
+            </div>
+            <div class="mb-4">
+                <h6 class="card-title">To</h6>
+                <Dropdown TItem="string" Class="w-100">
+                    <InitialTip>To</InitialTip>
+                    <ChildContent>
+                        @foreach (var item in Items)
+                        {
+                            <DropdownListItem TItem="DropdownItem" Item="@item">@item.Text</DropdownListItem>
+                        }
+                    </ChildContent>
+                </Dropdown>
+            </div>
         </div>
     </div>
 </div>
-
 @code {
     private static List<DropdownItem> Items = new List<DropdownItem>
     {
