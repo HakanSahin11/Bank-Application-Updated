@@ -8,7 +8,7 @@
             aria-haspopup="true" aria-expanded="@show.ToString().ToLower()">
         @Tip
     </button>
-    <CascadingValue name="Dropdown" Value="@this">
+    <CascadingValue Value="this">
         <div class="dropdown-menu @(show ? "show" : "") @(Class ?? string.Empty)">
             @ChildContent
         </div>
@@ -28,6 +28,12 @@
     [Parameter]
     public string Class { get; set; }
 
+    [Parameter]
+    public TItem Value { get; set; }
+
+    [Parameter]
+    public EventCallback<TItem> ValueChanged { get; set; }
+
     private bool show = false;
     private RenderFragment Tip;
 
@@ -43,9 +49,13 @@
 
     public async Task HandleSelect(TItem item, RenderFragment<TItem> contentFragment)
     {
-        Tip = contentFragment.Invoke(item);
+        Tip = contentFragment(item);
         show = false;
         StateHasChanged();
+        if (ValueChanged.HasDelegate)
+        {
+            await ValueChanged.InvokeAsync(item);
+        }
         await OnSelected.InvokeAsync(item);
     }
 }

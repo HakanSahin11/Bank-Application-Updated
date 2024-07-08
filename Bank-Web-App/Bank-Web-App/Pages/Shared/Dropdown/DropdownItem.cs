@@ -3,13 +3,13 @@
 
     public class DropdownItem
     {
-        public DropdownItem(string text, int value)
+        public DropdownItem(string text, long value)
         {
             Text = text;
             Value = value;
         }
 
         public string Text { get; set; }
-        public int Value { get; set; }
+        public long Value { get; set; }
     }
 }
