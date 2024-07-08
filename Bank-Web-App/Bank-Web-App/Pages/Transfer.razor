@@ -1,33 +1,54 @@
 ﻿@page "/Transfer"
 @using Bank_Shared_Classes.Models
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Collections.Generic
+@using Bank_Web_App.Services
+@using System.Security.Claims
+
+@inject AuthenticationStateProvider AuthenticationStateProvider;
+@inject IHttpClientService httpClientService
 
 <div class="d-flex flex-column align-items-center w-100">
     <h3 class="mb-4">Transfer funds</h3>
     <div class="card" style="width: 50%;">
         <div class="card-body">
+            
+
             <div class="mb-4">
-                <h6 class="card-title">From</h6>
-                <Dropdown TItem="string" Class="w-100">
+                <label>Account from</label>
+                <Dropdown TItem="long" Class="w-100" @bind-Value="TransactionRequest.FromAccountId">
                     <InitialTip>Select account</InitialTip>
                     <ChildContent>
-                        @foreach (var item in Items)
+                        @foreach (var item in InternalAccountlist)
                         {
-                            <DropdownListItem TItem="DropdownItem" Item="@item">@item.Text</DropdownListItem>
+                            <DropdownListItem TItem="long" Item="@item.Value">@item.Text</DropdownListItem>
                         }
                     </ChildContent>
                 </Dropdown>
             </div>
             <div class="mb-4">
-                <h6 class="card-title">To</h6>
-                <Dropdown TItem="string" Class="w-100">
-                    <InitialTip>Select account</InitialTip>
-                    <ChildContent>
-                        @foreach (var item in Items)
-                        {
-                            <DropdownListItem TItem="DropdownItem" Item="@item">@item.Text</DropdownListItem>
-                        }
-                    </ChildContent>
-                </Dropdown>
+                @if (InternalTransfer)
+                {
+                    <label>Account to</label>
+                    <Dropdown TItem="long" Class="w-100" @bind-Value="TransactionRequest.ToAccountId">
+                        <InitialTip>Select account</InitialTip>
+                        <ChildContent>
+                            @foreach (var item in InternalAccountlist)
+                            {
+                                <DropdownListItem TItem="long" Item="@item.Value">@item.Text</DropdownListItem>
+                            }
+                        </ChildContent>
+                    </Dropdown>
+                }
+                else
+                {
+                    <EditForm Model="@TransactionRequest" OnValidSubmit="HandleTransfer">
+                        <DataAnnotationsValidator />
+                        <label for="AccountTo">Account number to</label>
+                        <InputNumber id="AccountTo" class="form-control border border-dark" @bind-Value="TransactionRequest.ToAccountId" />
+                        <ValidationMessage For="@(() => TransactionRequest.ToAccountId)" />
+                    </EditForm>
+                }
             </div>
             <EditForm Model="@TransactionRequest" OnValidSubmit="HandleTransfer">
                 <DataAnnotationsValidator />
@@ -43,6 +64,11 @@
                     <InputText id="Note" class="form-control border border-dark" @bind-Value="TransactionRequest.Note" />
                 </div>
 
+                <div class="mb-4">
+                    <label>Internal transfer</label>
+                    <InputCheckbox @bind-Value="InternalTransfer" />
+                </div>
+
                 <div class="form-group mb-4">
                     <button type="submit" class="btn btn-primary w-100">Transfer funds</button>
                 </div>
@@ -51,18 +77,37 @@
     </div>
 </div>
 @code {
-    private static List<DropdownItem> Items = new List<DropdownItem>
+    // todo
+    // HandleTransfer - Creation of new funds transfer
+    // validation on dropdowns
+
+    protected override async Task OnInitializedAsync()
     {
-        new DropdownItem("Main account", 1) ,
-        new DropdownItem("Secondary account", 2) ,
-        new DropdownItem("Savings account", 3) ,
-    };
+        await LoadData();
+    }
 
     private TransactionRequest TransactionRequest = new TransactionRequest();
 
+    private bool InternalTransfer = true;
 
-    private double AmountToTransfer { get; set; }
-    private string Note { get; set; }
+    private static List<DropdownItem> InternalAccountlist = new List<DropdownItem>();
+    private static List<DropdownItem> InternalAccountlistTest = new List<DropdownItem>();
+
+    private async Task LoadData()
+    {
+
+        var principal = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userId = principal.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(userId))
+            return;
+
+        var internalAccounts = await httpClientService.SendHttpGetRequest<List<Account>>(IHttpClientService.Endpoints.Account, userId) ?? new();
+        if (internalAccounts != null && internalAccounts.Any())
+        {
+            InternalAccountlist = internalAccounts.Select(x => new DropdownItem($"{x.Name} - {x.AccountNumber} - {x.Money} DKK", x.AccountNumber)).ToList();
+        }
+    }
 
     private async void HandleTransfer()
     {
