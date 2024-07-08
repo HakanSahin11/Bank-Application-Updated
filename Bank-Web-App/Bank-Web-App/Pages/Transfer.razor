@@ -5,39 +5,33 @@
     <h3 class="mb-4">Transfer funds</h3>
     <div class="card" style="width: 50%;">
         <div class="card-body">
-
-            
-            
-
-                <div class="mb-4">
-                    <h6 class="card-title">From</h6>
-                    <Dropdown TItem="string" Class="w-100">
-                        <InitialTip>Select account</InitialTip>
-                        <ChildContent>
-                            @foreach (var item in Items)
-                            {
-                                <DropdownListItem TItem="DropdownItem" Item="@item">@item.Text</DropdownListItem>
-                            }
-                        </ChildContent>
-                    </Dropdown>
-                </div>
-                <div class="mb-4">
-                    <h6 class="card-title">To</h6>
-                    <Dropdown TItem="string" Class="w-100">
-                        <InitialTip>Select account</InitialTip>
-                        <ChildContent>
-                            @foreach (var item in Items)
-                            {
-                                <DropdownListItem TItem="DropdownItem" Item="@item">@item.Text</DropdownListItem>
-                            }
-                        </ChildContent>
-                    </Dropdown>
-                </div>
-
-
+            <div class="mb-4">
+                <h6 class="card-title">From</h6>
+                <Dropdown TItem="string" Class="w-100">
+                    <InitialTip>Select account</InitialTip>
+                    <ChildContent>
+                        @foreach (var item in Items)
+                        {
+                            <DropdownListItem TItem="DropdownItem" Item="@item">@item.Text</DropdownListItem>
+                        }
+                    </ChildContent>
+                </Dropdown>
+            </div>
+            <div class="mb-4">
+                <h6 class="card-title">To</h6>
+                <Dropdown TItem="string" Class="w-100">
+                    <InitialTip>Select account</InitialTip>
+                    <ChildContent>
+                        @foreach (var item in Items)
+                        {
+                            <DropdownListItem TItem="DropdownItem" Item="@item">@item.Text</DropdownListItem>
+                        }
+                    </ChildContent>
+                </Dropdown>
+            </div>
             <EditForm Model="@TransactionRequest" OnValidSubmit="HandleTransfer">
                 <DataAnnotationsValidator />
-            
+
                 <div class="form-group mb-4">
                     <label for="Amount">Amount To Transfer</label>
                     <InputNumber id="Amount" class="form-control border border-dark" @bind-Value="TransactionRequest.Amount" />
@@ -52,7 +46,7 @@
                 <div class="form-group mb-4">
                     <button type="submit" class="btn btn-primary w-100">Transfer funds</button>
                 </div>
-                </EditForm>
+            </EditForm>
         </div>
     </div>
 </div>
