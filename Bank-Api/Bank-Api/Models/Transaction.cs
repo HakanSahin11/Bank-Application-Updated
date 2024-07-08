@@ -41,5 +41,6 @@ namespace Bank_Api.Models
         public double Amount { get; set; }
         public long FromAccountId { get; set; }
         public long ToAccountId { get; set; }
+        public string Note { get; set; } = "";
     }
 }
