@@ -1,18 +1,20 @@
 ﻿@page "/Transfer"
 @using Bank_Shared_Classes.Models
+@using Bank_Web_App.Authentication
 @using Microsoft.AspNetCore.Components.Authorization
 @using System.Collections.Generic
 @using Bank_Web_App.Services
 @using System.Security.Claims
 
-@inject AuthenticationStateProvider AuthenticationStateProvider;
+@inject GetAuthenticationClaimsService AuthenticationStateProvider;
 @inject IHttpClientService httpClientService
+@inject NavigationManager NavManager
 
 <div class="d-flex flex-column align-items-center w-100">
     <h3 class="mb-4">Transfer funds</h3>
     <div class="card" style="width: 50%;">
         <div class="card-body">
-            
+
 
             <div class="mb-4">
                 <label>Account from</label>
@@ -78,7 +80,6 @@
 </div>
 @code {
     // todo
-    // HandleTransfer - Creation of new funds transfer
     // validation on dropdowns
 
     protected override async Task OnInitializedAsync()
@@ -92,17 +93,21 @@
 
     private static List<DropdownItem> InternalAccountlist = new List<DropdownItem>();
     private static List<DropdownItem> InternalAccountlistTest = new List<DropdownItem>();
+    private string Id { get; set; }
 
     private async Task LoadData()
     {
 
-        var principal = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var userId = principal.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-        if (string.IsNullOrEmpty(userId))
+        Id = await AuthenticationStateProvider.GetIdPrincipalId();
+        if (string.IsNullOrEmpty(Id))
             return;
 
-        var internalAccounts = await httpClientService.SendHttpGetRequest<List<Account>>(IHttpClientService.Endpoints.Account, userId) ?? new();
+        await LoadinternalAccounts();
+    }
+
+    private async Task LoadinternalAccounts()
+    {
+        var internalAccounts = await httpClientService.SendHttpGetRequest<List<Account>>(IHttpClientService.Endpoints.Account, Id) ?? new();
         if (internalAccounts != null && internalAccounts.Any())
         {
             InternalAccountlist = internalAccounts.Select(x => new DropdownItem($"{x.Name} - {x.AccountNumber} - {x.Money} DKK", x.AccountNumber)).ToList();
@@ -111,6 +116,23 @@
 
     private async void HandleTransfer()
     {
-        //add api call
+        if (TransactionRequest == null || TransactionRequest.Amount < 1 || TransactionRequest.FromAccountId < 1 || TransactionRequest.ToAccountId < 1 || TransactionRequest.FromAccountId == TransactionRequest.ToAccountId || string.IsNullOrEmpty(Id))
+        {
+            ErrorHandling();
+            return;
+        }
+
+        var request = await httpClientService.SendHttpPostRequest<TransactionResponse>(IHttpClientService.Endpoints.Transaction, Id, TransactionRequest) ?? new();
+        if (request != null)
+        {
+            // add showing confirmation
+            NavManager.Refresh();
+
+        }
+    }
+
+    private void ErrorHandling()
+    {
+
     }
 }

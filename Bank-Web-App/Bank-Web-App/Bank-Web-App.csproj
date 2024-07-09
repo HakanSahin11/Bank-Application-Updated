@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Bank-Shared-Classes\Bank-Shared-Classes.csproj" />
   </ItemGroup>
 

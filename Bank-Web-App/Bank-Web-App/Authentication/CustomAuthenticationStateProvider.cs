@@ -43,6 +43,6 @@ namespace Bank_Web_App.Authentication
                 await localStorageService.RemoveItemAsync("token");
             }
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
-        }
+        }        
     }
 }
