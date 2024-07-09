@@ -6,7 +6,7 @@
 @using Bank_Web_App.Services
 @using System.Security.Claims
 
-@inject AuthenticationStateProvider AuthenticationStateProvider;
+@inject GetAuthenticationClaimsService GetAuthenticationClaimsService;
 @inject IHttpClientService httpClientService
 <PageTitle>Account and Cards</PageTitle>
 
@@ -88,9 +88,7 @@
 
     private async Task LoadData()
     {
-
-        var principal = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var userId = principal.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        var userId = await GetAuthenticationClaimsService.GetIdPrincipalId();
 
         if (string.IsNullOrEmpty(userId))
             return; 

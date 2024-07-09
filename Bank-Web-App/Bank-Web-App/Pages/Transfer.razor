@@ -6,7 +6,7 @@
 @using Bank_Web_App.Services
 @using System.Security.Claims
 
-@inject GetAuthenticationClaimsService AuthenticationStateProvider;
+@inject GetAuthenticationClaimsService GetAuthenticationClaimsService;
 @inject IHttpClientService httpClientService
 @inject NavigationManager NavManager
 
@@ -98,7 +98,7 @@
     private async Task LoadData()
     {
 
-        Id = await AuthenticationStateProvider.GetIdPrincipalId();
+        Id = await GetAuthenticationClaimsService.GetIdPrincipalId();
         if (string.IsNullOrEmpty(Id))
             return;
 
